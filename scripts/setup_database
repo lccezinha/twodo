@@ -1,0 +1,22 @@
+#!/bin/bash
+
+FILE="$(pwd)/scripts/structure.sql"
+DATABASE_NAME="tuiter"
+USER="postgres"
+HOST="localhost"
+URL="postgres://$USER@$HOST/$DATABASE_NAME"
+
+ensure_database_exists() {
+  if ! psql $URL -c '\l' > /dev/null 2>&1; then
+    echo "$DATABASE_NAME doesn't exist. Creating..."
+    psql -U $USER -c "CREATE DATABASE $DATABASE_NAME"
+  fi
+}
+
+build_database_structure() {
+  echo "Building database structure for $DATABASE_NAME"
+  psql $URL -f $FILE
+}
+
+ensure_database_exists
+build_database_structure

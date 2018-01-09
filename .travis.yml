@@ -1,0 +1,10 @@
+language: go
+
+go:
+  - 1.8.x
+
+script:
+  go test -v ./internal/...
+
+install:
+  - go get "gopkg.in/DATA-DOG/go-sqlmock.v1"
