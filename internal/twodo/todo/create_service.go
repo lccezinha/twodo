@@ -2,6 +2,7 @@ package todo
 
 import (
 	"errors"
+	"time"
 
 	"github.com/lccezinha/twodo/internal/twodo"
 )
@@ -22,6 +23,7 @@ func (c *CreateService) Run(title string, description string) error {
 	t := &twodo.Todo{
 		Title:       title,
 		Description: description,
+		CreatedAt:   time.Now(),
 	}
 
 	if err := c.repository.Save(t); err != nil {
