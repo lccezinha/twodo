@@ -17,8 +17,14 @@ func (m *MemoryRepository) Save(t *twodo.Todo) error {
 }
 
 // ListAll will list all Todos in a MemoryRepository
-func (m *MemoryRepository) ListAll() (*twodo.Todos, error) {
-	return nil, nil
+func (m *MemoryRepository) ListAll() ([]*twodo.Todo, error) {
+	var todos []*twodo.Todo
+
+	for _, todo := range m.data {
+		todos = append(todos, todo)
+	}
+
+	return todos, nil
 }
 
 // NewMemoryRepository will return a new instance of MemoryRepository

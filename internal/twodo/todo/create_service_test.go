@@ -7,7 +7,7 @@ import (
 )
 
 func TestCreateService(t *testing.T) {
-	t.Run("Fail when title is blank", func(t *testing.T) {
+	t.Run("when title is blank must raise error", func(t *testing.T) {
 		repository := todo.NewMemoryRepository()
 		service := NewCreateService(repository)
 
@@ -21,7 +21,7 @@ func TestCreateService(t *testing.T) {
 		}
 	})
 
-	t.Run("Fail description is blank", func(t *testing.T) {
+	t.Run("when description is blank must raise error", func(t *testing.T) {
 		repository := todo.NewMemoryRepository()
 		service := NewCreateService(repository)
 
@@ -35,7 +35,7 @@ func TestCreateService(t *testing.T) {
 		}
 	})
 
-	t.Run("Success", func(t *testing.T) {
+	t.Run("when all fields are filled must save", func(t *testing.T) {
 		repository := todo.NewMemoryRepository()
 		service := NewCreateService(repository)
 
