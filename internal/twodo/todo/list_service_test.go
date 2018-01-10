@@ -23,7 +23,7 @@ func TestListService(t *testing.T) {
 		}
 	})
 
-	t.Run("when there are todos return all", func(t *testing.T) {
+	t.Run("when there are todos return all in decreasing order", func(t *testing.T) {
 		repository := todo.NewMemoryRepository()
 		service := NewListService(repository)
 		serviceCreate := NewCreateService(repository)
@@ -47,12 +47,12 @@ func TestListService(t *testing.T) {
 			t.Errorf("Must return at least one todo")
 		}
 
-		if todos[0].Title != todo.Title {
-			t.Errorf("Does not fetch correct todos")
+		if todos[0].Title != otherTodo.Title {
+			t.Errorf("Must fetch most recent todo first")
 		}
 
-		if todos[1].Title != otherTodo.Title {
-			t.Errorf("Does not fetch correct todos")
+		if todos[1].Title != todo.Title {
+			t.Errorf("Must fetch most old todo for last")
 		}
 
 		if err != nil {
