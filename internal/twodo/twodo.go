@@ -14,6 +14,7 @@ type Todo struct {
 type Repository interface {
 	Save(*Todo) error
 	ListAll() ([]*Todo, error)
+	Destroy(id int) error
 }
 
 // Creator define an interface to create new resources
