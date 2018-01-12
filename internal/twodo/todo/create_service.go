@@ -16,7 +16,7 @@ type CreateService struct {
 
 // Run method will execute the action of create a new Todo
 func (c *CreateService) Run(title string, description string) error {
-	if title == "" || description == "" {
+	if title == "" {
 		return errCannotBeBlank
 	}
 

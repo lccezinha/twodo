@@ -21,20 +21,6 @@ func TestCreateService(t *testing.T) {
 		}
 	})
 
-	t.Run("when description is blank must raise error", func(t *testing.T) {
-		repository := todo.NewMemoryRepository()
-		service := NewCreateService(repository)
-
-		title := "Some title"
-		description := ""
-
-		err := service.Run(title, description)
-
-		if err != errCannotBeBlank {
-			t.Errorf("Error: %s", err.Error())
-		}
-	})
-
 	t.Run("when all fields are filled must save", func(t *testing.T) {
 		repository := todo.NewMemoryRepository()
 		service := NewCreateService(repository)
@@ -43,6 +29,12 @@ func TestCreateService(t *testing.T) {
 		description := "Some Description"
 
 		err := service.Run(title, description)
+
+		if err != nil {
+			t.Errorf("Error: %s", err.Error())
+		}
+
+		err = service.Run("Other Title", "")
 
 		if err != nil {
 			t.Errorf("Error: %s", err.Error())
