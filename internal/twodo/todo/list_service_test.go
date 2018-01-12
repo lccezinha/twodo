@@ -26,7 +26,7 @@ func TestListService(t *testing.T) {
 	t.Run("when there are todos return all in decreasing order", func(t *testing.T) {
 		repository := todo.NewMemoryRepository()
 		service := NewListService(repository)
-		serviceCreate := NewCreateService(repository)
+		createService := NewCreateService(repository)
 
 		todo := &twodo.Todo{
 			Title:       "Title #1",
@@ -38,8 +38,8 @@ func TestListService(t *testing.T) {
 			Description: "Description #2",
 		}
 
-		serviceCreate.Run(todo.Title, todo.Description)
-		serviceCreate.Run(otherTodo.Title, otherTodo.Description)
+		createService.Run(todo.Title, todo.Description)
+		createService.Run(otherTodo.Title, otherTodo.Description)
 
 		todos, err := service.Run()
 

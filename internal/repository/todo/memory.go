@@ -1,10 +1,13 @@
 package todo
 
 import (
+	"errors"
 	"sort"
 
 	"github.com/lccezinha/twodo/internal/twodo"
 )
+
+var errNotFound = errors.New("not found")
 
 // MemoryRepository holds a fake repository to be used in tests
 type MemoryRepository struct {
@@ -38,6 +41,16 @@ func (m *MemoryRepository) ListAll() ([]*twodo.Todo, error) {
 	sort.Sort(todos)
 
 	return todos, nil
+}
+
+// Destroy will destroy a single Todo
+func (m *MemoryRepository) Destroy(id int) error {
+	if _, ok := m.data[id]; ok {
+		delete(m.data, id)
+		return nil
+	}
+
+	return errNotFound
 }
 
 // NewMemoryRepository will return a new instance of MemoryRepository
