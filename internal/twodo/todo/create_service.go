@@ -24,6 +24,7 @@ func (c *CreateService) Run(title string, description string) error {
 		Title:       title,
 		Description: description,
 		CreatedAt:   time.Now(),
+		Done:        false,
 	}
 
 	if err := c.repository.Save(t); err != nil {

@@ -8,6 +8,7 @@ type Todo struct {
 	Title       string
 	Description string
 	CreatedAt   time.Time
+	Done        bool
 }
 
 // Repository is the basic interface to implement each Repository
