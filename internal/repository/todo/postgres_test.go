@@ -82,5 +82,48 @@ func TestListAll(t *testing.T) {
 }
 
 func TestDestroy(t *testing.T) {
+	db, mock, _ := sqlmock.New()
+	defer db.Close()
+
+	todoID := 1
+
+	mock.ExpectPrepare("DELETE FROM todos WHERE id = (.+)")
+
+	repository := NewPostgresRepository(db)
+	err := repository.Destroy(todoID)
+
+	if err != nil {
+		t.Error("Error: ", err)
+	}
+
+	if err := mock.ExpectationsWereMet(); err != nil {
+		t.Errorf("There were unfulfilled expections: %s", err)
+	}
+}
+
+func TestUpdate(t *testing.T) {
+	// db, mock, _ := sqlmock.New()
+	// defer db.Close()
 	//
+	// // createdAtTodo, _ := time.Parse("2006-01-02", "2013-02-03")
+	// // row := sqlmock.NewRows([]string{"id", "title", "description", "created_at", "done"}).
+	// // 	AddRow(1, "Title #1", "Description #1", createdAtTodo, true)
+	//
+	// mock.ExpectQuery("SELECT done FROM todos WHERE id = (.+) RETURNING done").
+	// 	WithArgs(1)
+	//
+	// // mock.ExpectQuery("UPDATE FROM todos SET done = (.+) WHERE id = (.+)").
+	// // 	WithArgs(1).
+	// // 	WillReturnRows(row)
+	//
+	// repository := NewPostgresRepository(db)
+	// _, err := repository.Update(1)
+	//
+	// if err != nil {
+	// 	t.Error("Error: ", err)
+	// }
+	//
+	// if err := mock.ExpectationsWereMet(); err != nil {
+	// 	t.Errorf("There were unfulfilled expections: %s", err)
+	// }
 }

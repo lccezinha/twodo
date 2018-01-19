@@ -16,7 +16,7 @@ type Repository interface {
 	Save(*Todo) error
 	ListAll() ([]*Todo, error)
 	Destroy(id int) error
-	Update(id int) (*Todo, error)
+	Update(id int) error
 }
 
 // Creator define an interface to create new resources

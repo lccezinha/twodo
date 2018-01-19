@@ -9,7 +9,9 @@ import (
 const (
 	insertStmt    = "INSERT INTO todos (title, description, created_at, done) VALUES ($1, $2, $3, $4) RETURNING id;"
 	selectAllStmt = "SELECT id, title, description, created_at, done FROM todos ORDER BY id DESC;"
-	deleteStmt    = "DELETE FROM todos WHERE id = $1;"
+	destroyStmt   = "DELETE FROM todos WHERE id = $1;"
+	updateStmt    = "UPDATE todos SET done = $1 WHERE id = $1;"
+	findDoneStmt  = "SELECT done FROM todos WHERE id = $1 RETURNING done;"
 )
 
 // PostgresRepository holds repository that deal with postgres
@@ -47,10 +49,20 @@ func (p *PostgresRepository) ListAll() ([]*twodo.Todo, error) {
 	return todos, nil
 }
 
+// Destroy will destroy a single resource
 func (p *PostgresRepository) Destroy(id int) error {
+	stmt, err := p.DB.Prepare(destroyStmt)
+
+	if err != nil {
+		return err
+	}
+
+	stmt.Exec(id)
+
 	return nil
 }
 
+// Update will update the done status
 func (p *PostgresRepository) Update(id int) (*twodo.Todo, error) {
 	return nil, nil
 }

@@ -56,13 +56,13 @@ func (m *MemoryRepository) Destroy(id int) error {
 }
 
 // Update will update a single Todo
-func (m *MemoryRepository) Update(id int) (*twodo.Todo, error) {
+func (m *MemoryRepository) Update(id int) error {
 	if todo, ok := m.data[id]; ok {
 		todo.Done = !todo.Done
-		return todo, nil
+		return nil
 	}
 
-	return nil, errNotFound
+	return errNotFound
 }
 
 // NewMemoryRepository will return a new instance of MemoryRepository
