@@ -11,7 +11,7 @@ const (
 	selectAllStmt = "SELECT id, title, description, created_at, done FROM todos ORDER BY id DESC;"
 	destroyStmt   = "DELETE FROM todos WHERE id = $1;"
 	updateStmt    = "UPDATE todos SET done = $1 WHERE id = $1;"
-	findDoneStmt  = "SELECT done FROM todos WHERE id = $1 RETURNING done;"
+	findByID      = "SELECT id, title, description, done, created_at FROM todos WHERE id = $1;"
 )
 
 // PostgresRepository holds repository that deal with postgres
@@ -60,6 +60,23 @@ func (p *PostgresRepository) Destroy(id int) error {
 	stmt.Exec(id)
 
 	return nil
+}
+
+// FindByID will return a single resource
+func (p *PostgresRepository) FindByID(id int) (*twodo.Todo, error) {
+	todo := &twodo.Todo{}
+
+	err := p.DB.QueryRow(findByID, id).
+		Scan(&todo.ID, &todo.Title, &todo.Description, &todo.CreatedAt, &todo.Done)
+
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return nil, errNotFound
+		}
+		return nil, err
+	}
+
+	return todo, nil
 }
 
 // Update will update the done status
