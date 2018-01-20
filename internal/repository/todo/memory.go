@@ -56,9 +56,9 @@ func (m *MemoryRepository) Destroy(id int) error {
 }
 
 // Update will update a single Todo
-func (m *MemoryRepository) Update(id int) error {
+func (m *MemoryRepository) Update(id int, done bool) error {
 	if todo, ok := m.data[id]; ok {
-		todo.Done = !todo.Done
+		todo.Done = done
 		return nil
 	}
 

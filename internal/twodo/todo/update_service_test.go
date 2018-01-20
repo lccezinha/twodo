@@ -20,11 +20,19 @@ func TestUpdate(t *testing.T) {
 			t.Errorf("Default todo is not false")
 		}
 
-		service.Run(todos[0].ID)
+		service.Run(todos[0].ID, true)
 
 		todos, _ = serviceList.Run()
 
 		if todos[0].Done != true {
+			t.Errorf("Todo was not updated")
+		}
+
+		service.Run(todos[0].ID, false)
+
+		todos, _ = serviceList.Run()
+
+		if todos[0].Done != false {
 			t.Errorf("Todo was not updated")
 		}
 	})
