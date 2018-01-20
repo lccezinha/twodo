@@ -20,7 +20,9 @@ type sortedTodos []*twodo.Todo
 
 func (st sortedTodos) Len() int           { return len(st) }
 func (st sortedTodos) Swap(i, j int)      { st[i], st[j] = st[j], st[i] }
-func (st sortedTodos) Less(i, j int) bool { return st[i].CreatedAt.After(st[j].CreatedAt) }
+func (st sortedTodos) Less(i, j int) bool { return st[i].ID > st[j].ID }
+
+// func (st sortedTodos) Less(i, j int) bool { return st[i].CreatedAt.After(st[j].CreatedAt) }
 
 // Save will save a Todo in a MemoryRepository
 func (m *MemoryRepository) Save(t *twodo.Todo) error {
@@ -47,6 +49,16 @@ func (m *MemoryRepository) ListAll() ([]*twodo.Todo, error) {
 func (m *MemoryRepository) Destroy(id int) error {
 	if _, ok := m.data[id]; ok {
 		delete(m.data, id)
+		return nil
+	}
+
+	return errNotFound
+}
+
+// Update will update a single Todo
+func (m *MemoryRepository) Update(id int, done bool) error {
+	if todo, ok := m.data[id]; ok {
+		todo.Done = done
 		return nil
 	}
 

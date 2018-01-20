@@ -16,6 +16,7 @@ type Repository interface {
 	Save(*Todo) error
 	ListAll() ([]*Todo, error)
 	Destroy(id int) error
+	Update(id int, done bool) error
 }
 
 // Creator define an interface to create new resources
@@ -31,4 +32,9 @@ type List interface {
 // Destroyer define an interface to destroy a single resource
 type Destroyer interface {
 	Run(id int) error
+}
+
+// Updater define an interface to update a single resource
+type Updater interface {
+	Run(id int, done bool) (*Todo, error)
 }
