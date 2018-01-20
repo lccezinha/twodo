@@ -65,15 +65,6 @@ func (m *MemoryRepository) Update(id int) error {
 	return errNotFound
 }
 
-// FindByID will return a single resource by id
-func (m *MemoryRepository) FindByID(id int) (*twodo.Todo, error) {
-	if todo, ok := m.data[id]; ok {
-		return todo, nil
-	}
-
-	return nil, errNotFound
-}
-
 // NewMemoryRepository will return a new instance of MemoryRepository
 func NewMemoryRepository() *MemoryRepository {
 	return &MemoryRepository{

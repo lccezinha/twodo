@@ -127,31 +127,3 @@ func TestUpdate(t *testing.T) {
 	// 	t.Errorf("There were unfulfilled expections: %s", err)
 	// }
 }
-
-func TestFindByID(t *testing.T) {
-	db, mock, _ := sqlmock.New()
-	defer db.Close()
-
-	createdAtTodo, _ := time.Parse("2006-01-02", "2013-02-03")
-	rows := sqlmock.NewRows([]string{"id", "title", "description", "created_at", "done"}).
-		AddRow(1, "Title #1", "Description #1", createdAtTodo, false)
-
-	mock.ExpectQuery("SELECT id, title, description, done, created_at FROM todos WHERE id = (.+)").
-		WithArgs(1).
-		WillReturnRows(rows)
-
-	repository := NewPostgresRepository(db)
-	todo, err := repository.FindByID(1)
-
-	if err != nil {
-		t.Error("Error: ", err)
-	}
-
-	if err := mock.ExpectationsWereMet(); err != nil {
-		t.Errorf("There were unfulfilled expections: %s", err)
-	}
-
-	if todo.Title != "Title #1" {
-		t.Error("Todo's title does not match")
-	}
-}
