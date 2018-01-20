@@ -102,28 +102,59 @@ func TestDestroy(t *testing.T) {
 }
 
 func TestUpdate(t *testing.T) {
-	// db, mock, _ := sqlmock.New()
-	// defer db.Close()
-	//
-	// // createdAtTodo, _ := time.Parse("2006-01-02", "2013-02-03")
-	// // row := sqlmock.NewRows([]string{"id", "title", "description", "created_at", "done"}).
-	// // 	AddRow(1, "Title #1", "Description #1", createdAtTodo, true)
-	//
-	// mock.ExpectQuery("SELECT done FROM todos WHERE id = (.+) RETURNING done").
-	// 	WithArgs(1)
-	//
-	// // mock.ExpectQuery("UPDATE FROM todos SET done = (.+) WHERE id = (.+)").
-	// // 	WithArgs(1).
-	// // 	WillReturnRows(row)
-	//
-	// repository := NewPostgresRepository(db)
-	// _, err := repository.Update(1)
-	//
-	// if err != nil {
-	// 	t.Error("Error: ", err)
-	// }
-	//
-	// if err := mock.ExpectationsWereMet(); err != nil {
-	// 	t.Errorf("There were unfulfilled expections: %s", err)
-	// }
+	t.Run("Update todo.Done from false to true", func(t *testing.T) {
+		db, mock, _ := sqlmock.New()
+		defer db.Close()
+
+		createdAtTodo, _ := time.Parse("2006-01-02", "2013-02-03")
+		row := sqlmock.NewRows([]string{"id", "title", "description", "created_at", "done"}).
+			AddRow(1, "Title #1", "Description #1", createdAtTodo, true)
+
+		mock.ExpectQuery("UPDATE todos SET done = (.+) WHERE id = (.+);").
+			WithArgs(true, 1).
+			WillReturnRows(row)
+
+		repository := NewPostgresRepository(db)
+		todo, err := repository.Update(1, true)
+
+		if err != nil {
+			t.Error("Error: ", err)
+		}
+
+		if err := mock.ExpectationsWereMet(); err != nil {
+			t.Errorf("There were unfulfilled expections: %s", err)
+		}
+
+		if todo.Done != true {
+			t.Errorf("Todo was not update correctly. todo.Done eq %v, expected %v", todo.Done, true)
+		}
+	})
+
+	t.Run("Update todo.Done from true to false", func(t *testing.T) {
+		db, mock, _ := sqlmock.New()
+		defer db.Close()
+
+		createdAtTodo, _ := time.Parse("2006-01-02", "2013-02-03")
+		row := sqlmock.NewRows([]string{"id", "title", "description", "created_at", "done"}).
+			AddRow(1, "Title #1", "Description #1", createdAtTodo, false)
+
+		mock.ExpectQuery("UPDATE todos SET done = (.+) WHERE id = (.+);").
+			WithArgs(false, 1).
+			WillReturnRows(row)
+
+		repository := NewPostgresRepository(db)
+		todo, err := repository.Update(1, false)
+
+		if err != nil {
+			t.Error("Error: ", err)
+		}
+
+		if err := mock.ExpectationsWereMet(); err != nil {
+			t.Errorf("There were unfulfilled expections: %s", err)
+		}
+
+		if todo.Done != false {
+			t.Errorf("Todo was not update correctly. todo.Done eq %v, expected %v", todo.Done, false)
+		}
+	})
 }

@@ -10,7 +10,7 @@ const (
 	insertStmt    = "INSERT INTO todos (title, description, created_at, done) VALUES ($1, $2, $3, $4) RETURNING id;"
 	selectAllStmt = "SELECT id, title, description, created_at, done FROM todos ORDER BY id DESC;"
 	destroyStmt   = "DELETE FROM todos WHERE id = $1;"
-	updateStmt    = "UPDATE todos SET done = $1 WHERE id = $1;"
+	updateStmt    = "UPDATE todos SET done = $1 WHERE id = $2;"
 )
 
 // PostgresRepository holds repository that deal with postgres
@@ -62,8 +62,17 @@ func (p *PostgresRepository) Destroy(id int) error {
 }
 
 // Update will update the done status
-func (p *PostgresRepository) Update(id int) (*twodo.Todo, error) {
-	return nil, nil
+func (p *PostgresRepository) Update(id int, done bool) (*twodo.Todo, error) {
+	todo := &twodo.Todo{}
+
+	err := p.DB.QueryRow(updateStmt, done, id).
+		Scan(&todo.ID, &todo.Title, &todo.Description, &todo.CreatedAt, &todo.Done)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return todo, nil
 }
 
 // NewPostgresRepository will return a new instance of PostgresRepository
