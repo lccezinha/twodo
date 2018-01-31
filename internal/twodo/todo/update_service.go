@@ -8,14 +8,14 @@ type UpdateService struct {
 }
 
 // Run method will execute the action of update a Todo
-func (u *UpdateService) Run(id int, done bool) error {
-	err := u.repository.Update(id, done)
+func (u *UpdateService) Run(id int, done bool) (*twodo.Todo, error) {
+	todo, err := u.repository.Update(id, done)
 
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	return nil
+	return todo, nil
 }
 
 // NewUpdateService works as a factory method
