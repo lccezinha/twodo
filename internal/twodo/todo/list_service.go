@@ -15,6 +15,6 @@ func (l *ListService) Run() ([]*twodo.Todo, error) {
 }
 
 // NewListService works as a factory method
-func NewListService(r twodo.Repository) *ListService {
+func NewListService(r twodo.Repository) twodo.List {
 	return &ListService{r}
 }

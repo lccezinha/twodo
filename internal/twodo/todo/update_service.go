@@ -19,6 +19,6 @@ func (u *UpdateService) Run(id int, done bool) error {
 }
 
 // NewUpdateService works as a factory method
-func NewUpdateService(r twodo.Repository) *UpdateService {
+func NewUpdateService(r twodo.Repository) twodo.Updater {
 	return &UpdateService{r}
 }

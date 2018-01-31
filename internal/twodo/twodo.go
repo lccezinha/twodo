@@ -26,7 +26,7 @@ type Creator interface {
 
 // List define an interface to list resources
 type List interface {
-	Run() (*[]Todo, error)
+	Run() ([]*Todo, error)
 }
 
 // Destroyer define an interface to destroy a single resource
@@ -36,5 +36,5 @@ type Destroyer interface {
 
 // Updater define an interface to update a single resource
 type Updater interface {
-	Run(id int, done bool) (*Todo, error)
+	Run(id int, done bool) error
 }

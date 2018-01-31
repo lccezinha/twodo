@@ -17,6 +17,6 @@ func (d *DestroyService) Run(id int) error {
 }
 
 // NewDestroyService works as a factory method
-func NewDestroyService(r twodo.Repository) *DestroyService {
+func NewDestroyService(r twodo.Repository) twodo.Destroyer {
 	return &DestroyService{r}
 }
