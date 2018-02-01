@@ -35,6 +35,6 @@ func (c *CreateService) Run(title string, description string) error {
 }
 
 // NewCreateService works as a factory method
-func NewCreateService(r twodo.Repository) *CreateService {
+func NewCreateService(r twodo.Repository) twodo.Creator {
 	return &CreateService{r}
 }
