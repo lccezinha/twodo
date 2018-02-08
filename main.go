@@ -9,7 +9,7 @@ import (
 
 func main() {
 	http.HandleFunc("/", web.IndexHandler)
-	// http.HandleFunc("/create", web.CreateHandler)
+	http.HandleFunc("/todos", web.CreateHandler)
 	log.Print("Running server... http://localhost:8080")
 	err := http.ListenAndServe(":8080", nil)
 

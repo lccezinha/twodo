@@ -4,6 +4,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
+	"net/url"
 	"strings"
 	"testing"
 )
@@ -27,31 +28,52 @@ func TestIndexHandler(t *testing.T) {
 }
 
 func TestCreateHandler(t *testing.T) {
-	// t.Run("Fail - use wrong http method to send request", func(t *testing.T) {
-	// 	data := url.Values{}
-	// 	data.Add("title", "")
-	// 	data.Add("description", "Some Description")
-	// 	req := httptest.NewRequest("GET", "/create", strings.NewReader(data.Encode()))
-	// 	w := httptest.NewRecorder()
-	// 	handler := http.HandlerFunc(CreateHandler)
-	// 	handler.ServeHTTP(w, req)
-	//
-	// 	if status := w.Code; status != http.StatusMethodNotAllowed {
-	// 		t.Errorf("Handler returning wrong http status code, expected %v, received %v", http.StatusBadRequest, w.Code)
-	// 	}
-	// })
+	t.Run("Fail - use wrong http method to send request", func(t *testing.T) {
+		params := url.Values{}
+		params.Add("title", "")
+		params.Add("description", "")
+		req := httptest.NewRequest("GET", "/todos", strings.NewReader(params.Encode()))
+		w := httptest.NewRecorder()
+		handler := http.HandlerFunc(CreateHandler)
+		handler.ServeHTTP(w, req)
 
-	// t.Run("Fail because todo title is not set", func(t *testing.T) {
-	// 	params := url.Values{}
-	// 	params.Add("title", "")
-	// 	params.Add("description", "Some Description")
-	// 	req, _ := http.NewRequest("POST", "/", strings.NewReader(params.Encode()))
-	// 	w := httptest.NewRecorder()
-	// 	handler := http.HandlerFunc(CreateHandler)
-	// 	handler.ServeHTTP(w, req)
-	//
-	// 	if status := w.Code; status != http.StatusBadRequest {
-	// 		t.Errorf("Handler returning wrong http status code, expected %v, received %v", http.StatusBadRequest, w.Code)
-	// 	}
-	// })
+		if status := w.Code; status != http.StatusMethodNotAllowed {
+			t.Errorf("Handler returning wrong http status code, expected %v, received %v", http.StatusBadRequest, w.Code)
+		}
+	})
+
+	t.Run("Fail because todo title is not set", func(t *testing.T) {
+		params := url.Values{}
+		params.Add("title", "")
+		params.Add("description", "Some Description")
+		req := httptest.NewRequest("POST", "/todos", strings.NewReader(params.Encode()))
+		req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
+		w := httptest.NewRecorder()
+		handler := http.HandlerFunc(CreateHandler)
+		handler.ServeHTTP(w, req)
+
+		if status := w.Code; status != http.StatusBadRequest {
+			t.Errorf("Handler returning wrong http status code, expected %v, received %v", http.StatusBadRequest, w.Code)
+		}
+	})
+
+	t.Run("Success create a new todo", func(t *testing.T) {
+		params := url.Values{}
+		params.Add("title", "Some title")
+		params.Add("description", "Some Description")
+		req := httptest.NewRequest("POST", "/todos", strings.NewReader(params.Encode()))
+		req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
+		w := httptest.NewRecorder()
+		handler := http.HandlerFunc(CreateHandler)
+		handler.ServeHTTP(w, req)
+
+		if status := w.Code; status != http.StatusOK {
+			t.Errorf("Handler returning wrong http status code, expected %v, received %v", http.StatusBadRequest, w.Code)
+		}
+
+		// body, _ := ioutil.ReadAll(w.Body)
+		// if !strings.Contains(string(body), params.Get("title")) {
+		// 	t.Error("Body does not contain correct todo title")
+		// }
+	})
 }
