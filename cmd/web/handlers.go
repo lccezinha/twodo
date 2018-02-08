@@ -41,17 +41,15 @@ func CreateHandler(w http.ResponseWriter, r *http.Request) {
 	title := r.FormValue("title")
 	description := r.FormValue("description")
 
-	if title == "" {
-		w.Header().Set("error_message", "Title can not be blank")
+	err := app.CreateService.Run(title, description)
+
+	if err != nil {
+		w.Header().Set("error_message", err.Error())
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
-	err := app.CreateService.Run(title, description)
-
-	if err != nil {
-		panic(err.Error())
-	}
+	w.WriteHeader(http.StatusOK)
 }
 
 // func DestroyHandler(w http.ResponseWriter, r *http.Request) {}
