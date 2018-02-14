@@ -56,7 +56,7 @@ func CreateHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.WriteHeader(http.StatusOK)
+	http.Redirect(w, r, "/", http.StatusFound)
 }
 
 // DestroyHandler will destroy a single resource

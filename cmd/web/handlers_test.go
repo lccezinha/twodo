@@ -67,8 +67,8 @@ func TestCreateHandler(t *testing.T) {
 		handler := http.HandlerFunc(CreateHandler)
 		handler.ServeHTTP(w, req)
 
-		if status := w.Code; status != http.StatusOK {
-			t.Errorf("Handler returning wrong http status code, expected %v, received %v", http.StatusBadRequest, w.Code)
+		if status := w.Code; status != http.StatusFound {
+			t.Errorf("Handler returning wrong http status code, expected %v, received %v", http.StatusFound, w.Code)
 		}
 
 		// body, _ := ioutil.ReadAll(w.Body)
