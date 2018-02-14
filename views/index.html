@@ -5,7 +5,6 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Twodo APP</title>
-    <head>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -14,28 +13,27 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
   </head>
-  </head>
   <body>
     <div class="container">
       <div class="row">
         <form role="form" id="create-todo" class="create-todo" action="/todos" method="POST">
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-sm-6">
               <div class="form-group">
                 <input type="text" class="form-control" name="title" autocomplete="off" id="title" placeholder="Title" required>
               </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-md-12">
+          <!-- <div class="row">
+            <div class="col-sm-6">
               <div class="form-group">
-                <textarea class="form-control textarea" rows="3" name="description" id="description" placeholder="Description"></textarea>
+                <textarea class="form-control textarea" rows="2" name="description" id="description" placeholder="Description"></textarea>
               </div>
             </div>
-          </div>
+          </div> -->
           <div class="row">
-            <div class="col-md-12">
-              <button type="submit" class="btn btn-primary main-btn pull-right">Create Todo</button>
+            <div class="col-sm-6">
+              <button type="submit" class="btn btn-large btn-primary main-btn pull-right">Create Todo</button>
             </div>
           </div>
         </form>
@@ -45,14 +43,29 @@
     <hr />
 
     <div class="container" id="list-todos">
-      <ul>
-        {{range $index, $todo := .}}
-          <li id="todo-{{$todo.ID}}">
-            <h5>{{$todo.Title}}</h5>
-            <small>{{$todo.Description}}</small>
-          </li>
-        {{end}}
-      </ul>
+      <div class="row">
+        <div class='col-sm-6'>
+          <ul>
+            {{range $index, $todo := .}}
+              <li id="todo-{{$todo.ID}}">
+                {{if eq $todo.Done true}}
+                  <strike><span class='todo-title'>{{$todo.Title}}</span></strike>
+                  <span class='icons'>
+                    <a href="#" class='destroy-todo pull-right glyphicon glyphicon-trash' title='Destroy'></a>
+                    <a href="#" class='mark-as-undone pull-right glyphicon glyphicon-remove' title='Mark as Undone'></a>
+                  </span>
+                {{else}}
+                  <span class='todo-title'>{{$todo.Title}}</span>
+                  <span class='icons'>
+                    <a href="#" class='destroy-todo pull-right glyphicon glyphicon-trash' title='Destroy'></a>
+                    <a href="#" class='mark-as-done pull-right glyphicon glyphicon-ok' title='Mark as Done'></a>
+                  </span>
+                {{end}}
+              </li>
+            {{end}}
+          </ul>
+        </div>
+      </div>
     </div>
   </body>
 </html>
