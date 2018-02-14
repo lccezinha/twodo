@@ -41,5 +41,18 @@
         </form>
       </div>
     </div>
+
+    <hr />
+
+    <div class="container" id="list-todos">
+      <ul>
+        {{range $index, $todo := .}}
+          <li id="todo-{{$todo.ID}}">
+            <h5>{{$todo.Title}}</h5>
+            <small>{{$todo.Description}}</small>
+          </li>
+        {{end}}
+      </ul>
+    </div>
   </body>
 </html>

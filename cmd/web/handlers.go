@@ -22,9 +22,15 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 		log.Fatalf("Error: %s", err.Error())
 	}
 
+	todos, err := app.ListService.Run()
+
+	if err != nil {
+		log.Fatalf("Error: %s", err.Error())
+	}
+
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	w.WriteHeader(http.StatusOK)
-	t.Execute(w, nil)
+	t.Execute(w, todos)
 }
 
 // CreateHandler will handle request to "/" path with post request
