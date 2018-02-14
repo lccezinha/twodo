@@ -4,6 +4,7 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/lccezinha/twodo/cmd/environment"
 )
@@ -58,5 +59,27 @@ func CreateHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
-// func DestroyHandler(w http.ResponseWriter, r *http.Request) {}
+// DestroyHandler will destroy a single resource
+func DestroyHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != "DELETE" {
+		w.Header().Set("Allow", "DELETE")
+		w.Header().Set("error_message", r.Method)
+		w.WriteHeader(http.StatusMethodNotAllowed)
+		return
+	}
+
+	todoIDString := r.URL.Query().Get("todoID")
+	todoID, _ := strconv.Atoi(todoIDString)
+
+	err := app.DestroyService.Run(todoID)
+
+	if err != nil {
+		w.Header().Set("error_message", err.Error())
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+}
+
 // func UpdateHandler(w http.ResponseWriter, r *http.Request) {}

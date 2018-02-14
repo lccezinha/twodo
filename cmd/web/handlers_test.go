@@ -77,3 +77,27 @@ func TestCreateHandler(t *testing.T) {
 		// }
 	})
 }
+
+func TestDestroyHandler(t *testing.T) {
+	t.Run("Fail - use wrong http method to send request", func(t *testing.T) {
+		req := httptest.NewRequest("GET", "/destroy?todoID=1", nil)
+		response := httptest.NewRecorder()
+		handler := http.HandlerFunc(DestroyHandler)
+		handler.ServeHTTP(response, req)
+
+		if status := response.Code; status != http.StatusMethodNotAllowed {
+			t.Errorf("Handler returning wrong http status code, expected %v, received %v", http.StatusBadRequest, response.Code)
+		}
+	})
+
+	t.Run("Success when resource is destroyed", func(t *testing.T) {
+		req := httptest.NewRequest("DELETE", "/destroy?todoID=1", nil)
+		response := httptest.NewRecorder()
+		handler := http.HandlerFunc(DestroyHandler)
+		handler.ServeHTTP(response, req)
+
+		if status := response.Code; status != http.StatusOK {
+			t.Errorf("Handler returning wrong http status code, expected %v, received %v", http.StatusBadRequest, response.Code)
+		}
+	})
+}

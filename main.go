@@ -10,6 +10,7 @@ import (
 func main() {
 	http.HandleFunc("/", web.IndexHandler)
 	http.HandleFunc("/todos", web.CreateHandler)
+	http.HandleFunc("/destroy", web.DestroyHandler)
 	log.Print("Running server... http://localhost:8080")
 	err := http.ListenAndServe(":8080", nil)
 
