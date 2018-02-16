@@ -1,3 +1,27 @@
-body {
-  color: red;
+#todo-app {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.main {
+  margin-top: 50px;
+  width: 1000px;
+}
+
+.main ul {
+  list-style: none;
+  width: 1000px;
+}
+
+.main ul li {
+  display: block;
+  overflow: hidden;
+  margin-bottom: 5px;
+}
+
+.icons > a {
+  margin-left: 10px;
 }

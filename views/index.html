@@ -16,54 +16,50 @@
     <link href="/static/css/application.css" rel="stylesheet">
   </head>
   <body>
-    <div class="container">
-      <div class="row">
-        <form role="form" id="create-todo" class="create-todo" action="/todos" method="POST">
-          <div class="row">
-            <div class="col-sm-6">
-              <div class="form-group">
-                <input type="text" class="form-control" name="title" autocomplete="off" id="title" placeholder="Title" required>
+    <div class="container" id="todo-app">
+      <div class="main">
+        <h1 class='text-center'>Twodo</h1>
+        <div class="row">
+          <form role="form" id="create-todo" class="create-todo" action="/todos" method="POST">
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <input type="text" class="form-control" name="title" autocomplete="off" id="title" placeholder="Title" required>
+                </div>
               </div>
             </div>
-          </div>
-          <!-- <div class="row">
-            <div class="col-sm-6">
-              <div class="form-group">
-                <textarea class="form-control textarea" rows="2" name="description" id="description" placeholder="Description"></textarea>
+            <div class="row">
+              <div class="col-sm-12">
+                <button type="submit" class="btn btn-large btn-primary main-btn pull-right">Create Todo</button>
               </div>
             </div>
-          </div> -->
-          <div class="row">
-            <div class="col-sm-6">
-              <button type="submit" class="btn btn-large btn-primary main-btn pull-right">Create Todo</button>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
+          </form>
+        </div>
 
-    <div class="container" id="list-todos">
-      <div class="row">
-        <div class='col-sm-6'>
-          <ul>
-            {{range $index, $todo := .}}
-              <li id="todo-{{$todo.ID}}">
-                {{if eq $todo.Done true}}
-                  <strike><span class='todo-title'>{{$todo.Title}}</span></strike>
-                  <span class='icons'>
-                    <a href="#" class='destroy-todo pull-right glyphicon glyphicon-trash' title='Destroy'></a>
-                    <a href="#" class='mark-as-undone pull-right glyphicon glyphicon-remove' title='Mark as Undone'></a>
-                  </span>
-                {{else}}
-                  <span class='todo-title'>{{$todo.Title}}</span>
-                  <span class='icons'>
-                    <a href="#" class='destroy-todo pull-right glyphicon glyphicon-trash' title='Destroy'></a>
-                    <a href="#" class='mark-as-done pull-right glyphicon glyphicon-ok' title='Mark as Done'></a>
-                  </span>
-                {{end}}
-              </li>
-            {{end}}
-          </ul>
+        <hr />
+
+        <div class="row">
+          <div class='col-sm-12'>
+            <ul>
+              {{range $index, $todo := .}}
+                <li id="todo-{{$todo.ID}}">
+                  {{if eq $todo.Done true}}
+                    <strike><span class='todo-title'>{{$todo.Title}}</span></strike>
+                    <span class='icons pull-right'>
+                      <a href="#" class='mark-as-undone btn btn-warning glyphicon glyphicon-remove' title='Mark as Undone'></a>
+                      <a href="#" class='destroy-todo btn btn-danger glyphicon glyphicon-trash' title='Destroy'></a>
+                    </span>
+                  {{else}}
+                    <span class='todo-title'>{{$todo.Title}}</span>
+                    <span class='icons pull-right'>
+                      <a href="#" class='mark-as-done btn btn-success glyphicon glyphicon-ok' title='Mark as Done'></a>
+                      <a href="#" class='destroy-todo btn btn-danger glyphicon glyphicon-trash' title='Destroy'></a>
+                    </span>
+                  {{end}}
+                </li>
+              {{end}}
+            </ul>
+          </div>
         </div>
       </div>
     </div>
