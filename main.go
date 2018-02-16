@@ -11,7 +11,11 @@ func main() {
 	http.HandleFunc("/", web.IndexHandler)
 	http.HandleFunc("/todos", web.CreateHandler)
 	http.HandleFunc("/destroy", web.DestroyHandler)
+
+	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
+
 	log.Print("Running server... http://localhost:8080")
+
 	err := http.ListenAndServe(":8080", nil)
 
 	if err != nil {
