@@ -1,6 +1,7 @@
 package web
 
 import (
+	"database/sql"
 	"html/template"
 	"log"
 	"net/http"
@@ -68,8 +69,8 @@ func DestroyHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	todoIDString := r.URL.Query().Get("todoID")
-	todoID, _ := strconv.Atoi(todoIDString)
+	todoParamID := r.URL.Query().Get("todoID")
+	todoID, _ := strconv.Atoi(todoParamID)
 
 	err := app.DestroyService.Run(todoID)
 
@@ -82,4 +83,44 @@ func DestroyHandler(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/", http.StatusNoContent)
 }
 
-// func UpdateHandler(w http.ResponseWriter, r *http.Request) {}
+// DoneHandler will make resource as done
+func DoneHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != "POST" {
+		w.Header().Set("Allow", "POST")
+		w.Header().Set("error_message", "Wrong http method in request")
+		w.WriteHeader(http.StatusMethodNotAllowed)
+		return
+	}
+
+	todoParamID := r.URL.Query().Get("todoID")
+	todoID, _ := strconv.Atoi(todoParamID)
+
+	_, err := app.UpdateService.Run(todoID, true)
+
+	if err != nil && err != sql.ErrNoRows {
+		log.Fatal(err.Error())
+	}
+
+	w.WriteHeader(http.StatusOK)
+}
+
+// UndoneHandler will make resource as done
+func UndoneHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != "POST" {
+		w.Header().Set("Allow", "POST")
+		w.Header().Set("error_message", "Wrong http method in request")
+		w.WriteHeader(http.StatusMethodNotAllowed)
+		return
+	}
+
+	todoParamID := r.URL.Query().Get("todoID")
+	todoID, _ := strconv.Atoi(todoParamID)
+
+	_, err := app.UpdateService.Run(todoID, false)
+
+	if err != nil && err != sql.ErrNoRows {
+		log.Fatal(err.Error())
+	}
+
+	w.WriteHeader(http.StatusOK)
+}

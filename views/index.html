@@ -44,13 +44,13 @@
               {{range $index, $todo := .}}
                 <li id="todo-{{$todo.ID}}">
                   {{if eq $todo.Done true}}
-                    <strike><span class='todo-title'>{{$todo.Title}}</span></strike>
+                    <strike><span class='todo-title'>{{$todo.Title}} - {{$todo.ID}}</span></strike>
                     <span class='icons pull-right'>
                       <a href="#" class='mark-as-undone btn btn-warning glyphicon glyphicon-remove' title='Mark as Undone'></a>
                       <a href="#" class='destroy-todo btn btn-danger glyphicon glyphicon-trash' title='Destroy'></a>
                     </span>
                   {{else}}
-                    <span class='todo-title'>{{$todo.Title}}</span>
+                    <span class='todo-title'>{{$todo.Title}} - {{$todo.ID}}</span>
                     <span class='icons pull-right'>
                       <a href="#" class='mark-as-done btn btn-success glyphicon glyphicon-ok' title='Mark as Done'></a>
                       <a href="#" class='destroy-todo btn btn-danger glyphicon glyphicon-trash' title='Destroy'></a>
