@@ -79,7 +79,7 @@ func DestroyHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.WriteHeader(http.StatusOK)
+	http.Redirect(w, r, "/", http.StatusNoContent)
 }
 
 // func UpdateHandler(w http.ResponseWriter, r *http.Request) {}

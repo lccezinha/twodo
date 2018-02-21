@@ -96,8 +96,8 @@ func TestDestroyHandler(t *testing.T) {
 		handler := http.HandlerFunc(DestroyHandler)
 		handler.ServeHTTP(response, req)
 
-		if status := response.Code; status != http.StatusOK {
-			t.Errorf("Handler returning wrong http status code, expected %v, received %v", http.StatusBadRequest, response.Code)
+		if status := response.Code; status != http.StatusNoContent {
+			t.Errorf("Handler returning wrong http status code, expected %v, received %v", http.StatusNoContent, response.Code)
 		}
 	})
 }
