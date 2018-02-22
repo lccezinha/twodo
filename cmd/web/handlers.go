@@ -101,7 +101,7 @@ func DoneHandler(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err.Error())
 	}
 
-	w.WriteHeader(http.StatusOK)
+	http.Redirect(w, r, "/", http.StatusOK)
 }
 
 // UndoneHandler will make resource as done
@@ -122,5 +122,5 @@ func UndoneHandler(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err.Error())
 	}
 
-	w.WriteHeader(http.StatusOK)
+	http.Redirect(w, r, "/", http.StatusOK)
 }
