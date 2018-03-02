@@ -19,17 +19,17 @@ type PostgresRepository struct {
 }
 
 // Save will save the user in postgres repository
-func (p *PostgresRepository) Save(t *twodo.Todo) error {
+func (p *PostgresRepository) Save(t twodo.Todo) (twodo.Todo, error) {
 	err := p.DB.QueryRow(
 		insertStmt, t.Title, t.Description, t.CreatedAt, t.Done,
 	).Scan(&t.ID)
 
-	return err
+	return t, err
 }
 
 // ListAll will list all resources
-func (p *PostgresRepository) ListAll() ([]*twodo.Todo, error) {
-	var todos []*twodo.Todo
+func (p *PostgresRepository) ListAll() ([]twodo.Todo, error) {
+	var todos []twodo.Todo
 
 	rows, err := p.DB.Query(selectAllStmt)
 
@@ -38,7 +38,7 @@ func (p *PostgresRepository) ListAll() ([]*twodo.Todo, error) {
 	}
 
 	for rows.Next() {
-		todo := &twodo.Todo{}
+		todo := twodo.Todo{}
 		if err := rows.Scan(&todo.ID, &todo.Title, &todo.Description, &todo.CreatedAt, &todo.Done); err != nil {
 			return todos, err
 		}
@@ -62,14 +62,14 @@ func (p *PostgresRepository) Destroy(id int) error {
 }
 
 // Update will update the done status
-func (p *PostgresRepository) Update(id int, done bool) (*twodo.Todo, error) {
-	todo := &twodo.Todo{}
+func (p *PostgresRepository) Update(id int, done bool) (twodo.Todo, error) {
+	todo := twodo.Todo{}
 
 	err := p.DB.QueryRow(updateStmt, done, id).
 		Scan(&todo.ID, &todo.Title, &todo.Description, &todo.CreatedAt, &todo.Done)
 
 	if err != nil {
-		return nil, err
+		return todo, err
 	}
 
 	return todo, nil

@@ -12,10 +12,10 @@ import (
 
 // Application will hold all services to run up the app
 type Application struct {
-	CreateService  twodo.Creator
-	DestroyService twodo.Destroyer
-	ListService    twodo.List
-	UpdateService  twodo.Updater
+	CreateService twodo.Creator
+	// DestroyService twodo.Destroyer
+	// ListService    twodo.List
+	// UpdateService  twodo.Updater
 }
 
 // EnvVars will hold all env vars
@@ -27,15 +27,15 @@ func Init() *Application {
 	dataBase := loadDatabase(envVars)
 	repository := loadRepository(dataBase)
 	createService := loadCreateService(repository)
-	listService := loadListService(repository)
-	destroyService := loadDestroyService(repository)
-	updateService := loadUpdateService(repository)
+	// listService := loadListService(repository)
+	// destroyService := loadDestroyService(repository)
+	// updateService := loadUpdateService(repository)
 
 	return &Application{
-		CreateService:  createService,
-		ListService:    listService,
-		DestroyService: destroyService,
-		UpdateService:  updateService,
+		CreateService: createService,
+		// ListService:    listService,
+		// DestroyService: destroyService,
+		// UpdateService:  updateService,
 	}
 }
 
@@ -56,23 +56,23 @@ func loadDatabase(e EnvVars) *sql.DB {
 }
 
 func loadRepository(db *sql.DB) twodo.Repository {
-	// return repository.NewMemoryRepository()
+	return repository.NewMemoryRepository()
 
-	return repository.NewPostgresRepository(db)
+	// return repository.NewPostgresRepository(db)
 }
 
 func loadCreateService(r twodo.Repository) twodo.Creator {
 	return todo.NewCreateService(r)
 }
 
-func loadListService(r twodo.Repository) twodo.List {
-	return todo.NewListService(r)
-}
-
-func loadDestroyService(r twodo.Repository) twodo.Destroyer {
-	return todo.NewDestroyService(r)
-}
-
-func loadUpdateService(r twodo.Repository) twodo.Updater {
-	return todo.NewUpdateService(r)
-}
+// func loadListService(r twodo.Repository) twodo.List {
+// 	return todo.NewListService(r)
+// }
+//
+// func loadDestroyService(r twodo.Repository) twodo.Destroyer {
+// 	return todo.NewDestroyService(r)
+// }
+//
+// func loadUpdateService(r twodo.Repository) twodo.Updater {
+// 	return todo.NewUpdateService(r)
+// }
