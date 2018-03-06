@@ -20,14 +20,14 @@ func (c *CreateService) Run(title string, description string) error {
 		return errCannotBeBlank
 	}
 
-	t := &twodo.Todo{
+	todo := twodo.Todo{
 		Title:       title,
 		Description: description,
 		CreatedAt:   time.Now(),
 		Done:        false,
 	}
 
-	if err := c.repository.Save(t); err != nil {
+	if _, err := c.repository.Save(todo); err != nil {
 		return err
 	}
 

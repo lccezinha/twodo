@@ -15,7 +15,7 @@ func TestSave(t *testing.T) {
 
 	todoID := 1
 	createdAt, _ := time.Parse("2006-01-02", "2013-02-03")
-	todo := &twodo.Todo{
+	todo := twodo.Todo{
 		Title:       "Title",
 		Description: "Description",
 		CreatedAt:   createdAt,
@@ -29,7 +29,11 @@ func TestSave(t *testing.T) {
 		WillReturnRows(rows)
 
 	repository := NewPostgresRepository(db)
-	err := repository.Save(todo)
+	createdTodo, err := repository.Save(todo)
+
+	if createdTodo.Title != "Title" {
+		t.Errorf("Todo.title does not match. Expect %s, got %s", todo.Title, createdTodo.Title)
+	}
 
 	if err != nil {
 		t.Error("Error: ", err)
@@ -39,7 +43,7 @@ func TestSave(t *testing.T) {
 		t.Errorf("There were unfulfilled expections: %s", err)
 	}
 
-	if todo.ID != todoID {
+	if createdTodo.ID != todoID {
 		t.Error("Does not assign value to todoID")
 	}
 
