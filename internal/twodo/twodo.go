@@ -32,24 +32,3 @@ type Repository interface {
 type Validator interface {
 	Validate(todo Todo) []ValidationError
 }
-
-// Creator define an interface to create new resources
-type Creator interface {
-	Run(string, string) error
-}
-
-//
-// // List define an interface to list resources
-// type List interface {
-// 	Run() ([]*Todo, error)
-// }
-//
-// // Destroyer define an interface to destroy a single resource
-// type Destroyer interface {
-// 	Run(id int) error
-// }
-//
-// // Updater define an interface to update a single resource
-// type Updater interface {
-// 	Run(id int, done bool) (*Todo, error)
-// }
