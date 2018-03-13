@@ -32,3 +32,9 @@ type Repository interface {
 type Validator interface {
 	Validate(todo Todo) []ValidationError
 }
+
+// Presenter is the interface to present Todos
+type Presenter interface {
+	Present(todo Todo)
+	PresentErrors([]ValidationError)
+}
