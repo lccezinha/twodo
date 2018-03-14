@@ -1,16 +1,12 @@
 package twodo
 
-import (
-	"time"
-)
-
 // Todo hold todo information
 type Todo struct {
-	ID          int       `json:"id"`
-	Title       string    `json:"title"`
-	Description string    `json:"description"`
-	CreatedAt   time.Time `json:"created_at"`
-	Done        bool      `json:"done"`
+	ID          int    `json:"id"`
+	Title       string `json:"title"`
+	Description string `json:"description"`
+	// CreatedAt   time.Time `json:"created_at"`
+	Done bool `json:"done"`
 }
 
 // ValidationError hold the error information

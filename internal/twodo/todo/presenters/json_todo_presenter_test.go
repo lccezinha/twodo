@@ -18,26 +18,27 @@ func TestPresentTodo(t *testing.T) {
 		ID:          1,
 		Title:       "Title",
 		Description: "Description",
-		Done:        false,
+		// CreatedAt:   time.Now(),
+		Done: false,
 	}
-	expectedStatus := http.StatusOK
 
 	presenter.Present(http.StatusOK, todo)
 
 	expectedBody := []byte(
 		fmt.Sprintf(
-			`{"id":%d,"title":"%s", "description":"%s", "done":"%v"}`, todo.ID, todo.Title, todo.Description, todo.Done,
+			`{"id":%d,"title":"%s","description":"%s","done":%t}`, todo.ID, todo.Title, todo.Description, todo.Done,
 		),
 	)
 
 	response := w.Result()
 	body, _ := ioutil.ReadAll(response.Body)
+	expectedStatus := http.StatusOK
 
 	if !reflect.DeepEqual(body, expectedBody) {
 		t.Errorf("Expected: %s. Actual: %s", expectedBody, body)
 	}
 
-	if w.Result().StatusCode != expectedStatus {
+	if w.Result().StatusCode != http.StatusOK {
 		t.Errorf("Expected: %d. Actual: %d", expectedStatus, w.Result().StatusCode)
 	}
 

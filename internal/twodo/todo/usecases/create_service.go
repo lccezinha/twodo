@@ -1,8 +1,6 @@
 package todo
 
 import (
-	"time"
-
 	"github.com/lccezinha/twodo/internal/twodo"
 	"github.com/lccezinha/twodo/internal/twodo/todo/validators"
 )
@@ -18,8 +16,8 @@ func (c *CreateService) Run(title string, description string) []twodo.Validation
 	todo := twodo.Todo{
 		Title:       title,
 		Description: description,
-		CreatedAt:   time.Now(),
-		Done:        false,
+		// CreatedAt:   time.Now(),
+		Done: false,
 	}
 
 	errs := c.validator.Validate(todo)
