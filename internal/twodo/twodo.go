@@ -6,11 +6,11 @@ import (
 
 // Todo hold todo information
 type Todo struct {
-	ID          int
-	Title       string
-	Description string
-	CreatedAt   time.Time
-	Done        bool
+	ID          int       `json:"id"`
+	Title       string    `json:"title"`
+	Description string    `json:"description"`
+	CreatedAt   time.Time `json:"created_at"`
+	Done        bool      `json:"done"`
 }
 
 // ValidationError hold the error information
@@ -35,6 +35,6 @@ type Validator interface {
 
 // Presenter is the interface to present Todos
 type Presenter interface {
-	Present(todo Todo)
-	PresentErrors([]ValidationError)
+	Present(status int, todo Todo)
+	// PresentErrors(errs []ValidationError)
 }
