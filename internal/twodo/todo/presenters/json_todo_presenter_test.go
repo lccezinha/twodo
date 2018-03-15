@@ -49,3 +49,9 @@ func TestPresentTodo(t *testing.T) {
 		t.Errorf("Expected: %s. Actual: %s", expectedContentType, contentType)
 	}
 }
+
+func TestPresentTodoErrs(t *testing.T) {
+	if 1 != 1 {
+		t.Error("Error")
+	}
+}

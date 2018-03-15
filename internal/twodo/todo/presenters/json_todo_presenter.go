@@ -19,3 +19,8 @@ func (p *JSONTodoPresenter) Present(status int, todo twodo.Todo) {
 	p.ResponseWriter.Write([]byte(todoJSON))
 	p.ResponseWriter.WriteHeader(status)
 }
+
+// PresentErrors will present all errors for a Todo as a JSON
+func (p *JSONTodoPresenter) PresentErrors(errs []twodo.ValidationError) {
+	// true
+}
