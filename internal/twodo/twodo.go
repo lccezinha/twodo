@@ -11,9 +11,9 @@ type Todo struct {
 
 // ValidationError hold the error information
 type ValidationError struct {
-	Field   string
-	Message string
-	Type    string
+	Field   string `json:"field"`
+	Message string `json:"message"`
+	Type    string `json:"type"`
 }
 
 // Repository is the basic interface to implement each Repository

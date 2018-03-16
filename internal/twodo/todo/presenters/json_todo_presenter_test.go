@@ -38,7 +38,7 @@ func TestPresentTodo(t *testing.T) {
 		t.Errorf("Expected: %s. Actual: %s", expectedBody, body)
 	}
 
-	if w.Result().StatusCode != http.StatusOK {
+	if w.Result().StatusCode != expectedStatus {
 		t.Errorf("Expected: %d. Actual: %d", expectedStatus, w.Result().StatusCode)
 	}
 
@@ -51,7 +51,37 @@ func TestPresentTodo(t *testing.T) {
 }
 
 func TestPresentTodoErrs(t *testing.T) {
-	if 1 != 1 {
-		t.Error("Error")
+	w := httptest.NewRecorder()
+	presenter := JSONTodoPresenter{w}
+	errs := []twodo.ValidationError{
+		twodo.ValidationError{
+			Field:   "Title",
+			Message: "Can not be blank",
+			Type:    "Required",
+		},
+	}
+
+	presenter.PresentErrors(errs)
+
+	expectedError := fmt.Sprintf(`{"field":"%s","message":"%s","type":"%s"}`, errs[0].Field, errs[0].Message, errs[0].Type)
+	expectedBody := []byte(`{"errors":[` + expectedError + `]}`)
+
+	response := w.Result()
+	body, _ := ioutil.ReadAll(response.Body)
+	expectedStatus := http.StatusBadRequest
+
+	if !reflect.DeepEqual(body, expectedBody) {
+		t.Errorf("Expected: %s. Actual: %s", expectedBody, body)
+	}
+
+	if w.Result().StatusCode != expectedStatus {
+		t.Errorf("Expected: %d. Actual: %d", expectedStatus, w.Result().StatusCode)
+	}
+
+	expectedContentType := "application/json"
+	contentType := w.Result().Header.Get("Content-Type")
+
+	if contentType != expectedContentType {
+		t.Errorf("Expected: %s. Actual: %s", expectedContentType, contentType)
 	}
 }
