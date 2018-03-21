@@ -11,7 +11,7 @@ import (
 	"github.com/lccezinha/twodo/internal/twodo"
 )
 
-func TestPresentTodo(t *testing.T) {
+func TestPresentCreatedTodo(t *testing.T) {
 	w := httptest.NewRecorder()
 	presenter := JSONTodoPresenter{w}
 	todo := twodo.Todo{
@@ -22,7 +22,7 @@ func TestPresentTodo(t *testing.T) {
 		Done: false,
 	}
 
-	presenter.Present(http.StatusOK, todo)
+	presenter.PresentCreatedTodo(todo)
 
 	expectedBody := []byte(
 		fmt.Sprintf(
@@ -32,7 +32,7 @@ func TestPresentTodo(t *testing.T) {
 
 	response := w.Result()
 	body, _ := ioutil.ReadAll(response.Body)
-	expectedStatus := http.StatusOK
+	expectedStatus := http.StatusCreated
 
 	if !reflect.DeepEqual(body, expectedBody) {
 		t.Errorf("Expected: %s. Actual: %s", expectedBody, body)

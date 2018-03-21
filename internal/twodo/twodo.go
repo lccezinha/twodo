@@ -31,6 +31,6 @@ type Validator interface {
 
 // Presenter is the interface to present Todos
 type Presenter interface {
-	Present(status int, todo Todo)
+	PresentCreated(todo Todo)
 	PresentErrors(errs []ValidationError)
 }

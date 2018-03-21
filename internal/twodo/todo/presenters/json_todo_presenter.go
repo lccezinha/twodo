@@ -13,10 +13,10 @@ type JSONTodoPresenter struct {
 }
 
 // Present will present a Todo as a JSON
-func (p *JSONTodoPresenter) Present(status int, todo twodo.Todo) {
+func (p *JSONTodoPresenter) PresentCreatedTodo(todo twodo.Todo) {
 	todoJSON, _ := json.Marshal(todo)
 	p.ResponseWriter.Header().Set("Content-type", "application/json")
-	p.ResponseWriter.WriteHeader(status)
+	p.ResponseWriter.WriteHeader(http.StatusCreated)
 	p.ResponseWriter.Write([]byte(todoJSON))
 }
 
