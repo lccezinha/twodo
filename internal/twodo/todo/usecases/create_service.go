@@ -13,7 +13,7 @@ type CreateService struct {
 
 // Run method will execute the action of create a new Todo
 // Will receiver title, description and a JSONTodoPresenter
-func (c *CreateService) Run(title string, description string) []twodo.ValidationError {
+func (c *CreateService) Run(title string, description string, presenter twodo.Presenter) error {
 	todo := twodo.Todo{
 		Title:       title,
 		Description: description,
@@ -23,8 +23,15 @@ func (c *CreateService) Run(title string, description string) []twodo.Validation
 
 	errs := c.validator.Validate(todo)
 	if len(errs) > 0 {
-		return errs
+		presenter.PresentErrors(errs)
+		return nil
 	}
+
+	todo, err := c.repository.Save(todo)
+	if err != nil {
+		return err
+	}
+	presenter.PresentCreatedTodo(todo)
 
 	return nil
 }
