@@ -1,4 +1,4 @@
-package todo
+package usecases
 
 import (
 	"reflect"
@@ -42,10 +42,10 @@ func NewFakeRepository() *FakeRepository {
 func TestCreateService(t *testing.T) {
 	t.Run("Given blank title, it returns invalid fields", func(t *testing.T) {
 		repository := todo.NewMemoryRepository()
-		createService := NewCreateService(repository)
+		usecase := NewCreateTodoUseCase(repository)
 		presenter := NewFakePresenter()
 
-		createService.Run("", "Description", presenter)
+		usecase.Run("", "Description", presenter)
 
 		expectedErrs := []twodo.ValidationError{
 			twodo.ValidationError{
@@ -62,14 +62,14 @@ func TestCreateService(t *testing.T) {
 
 	t.Run("Given valid args, create and return todo", func(t *testing.T) {
 		repository := NewFakeRepository()
-		createService := NewCreateService(repository)
+		usecase := NewCreateTodoUseCase(repository)
 		presenter := NewFakePresenter()
 		todo := twodo.Todo{
 			Title:       "Title",
 			Description: "Description",
 		}
 
-		createService.Run(todo.Title, todo.Description, presenter)
+		usecase.Run(todo.Title, todo.Description, presenter)
 
 		if repository.todo != todo {
 			t.Errorf("Expected %v to be eq to %v", repository.todo, todo)

@@ -1,19 +1,19 @@
-package todo
+package usecases
 
 import (
 	"github.com/lccezinha/twodo/internal/twodo"
 	"github.com/lccezinha/twodo/internal/twodo/todo/validators"
 )
 
-// CreateService define a service to create a new Todo
-type CreateService struct {
+// CreateTodoUseCase define a service to create a new Todo
+type CreateTodoUseCase struct {
 	repository twodo.Repository
 	validator  twodo.Validator
 }
 
 // Run method will execute the action of create a new Todo
 // Will receiver title, description and a JSONTodoPresenter
-func (c *CreateService) Run(title string, description string, presenter twodo.Presenter) error {
+func (c *CreateTodoUseCase) Run(title string, description string, presenter twodo.Presenter) error {
 	todo := twodo.Todo{
 		Title:       title,
 		Description: description,
@@ -36,9 +36,9 @@ func (c *CreateService) Run(title string, description string, presenter twodo.Pr
 	return nil
 }
 
-// NewCreateService works as a factory method
-func NewCreateService(r twodo.Repository) *CreateService {
-	return &CreateService{
+// NewCreateTodoUseCase works as a factory method
+func NewCreateTodoUseCase(r twodo.Repository) *CreateTodoUseCase {
+	return &CreateTodoUseCase{
 		repository: r,
 		validator:  validators.TodoValidator{},
 	}
