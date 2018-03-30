@@ -4,46 +4,15 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/lccezinha/twodo/internal/repository/todo"
 	"github.com/lccezinha/twodo/internal/twodo"
+	stubs "github.com/lccezinha/twodo/internal/twodo/test"
 )
-
-type FakePresenter struct {
-	todo twodo.Todo
-	errs []twodo.ValidationError
-}
-
-func (fp *FakePresenter) PresentCreatedTodo(todo twodo.Todo) {
-	fp.todo = todo
-}
-
-func (fp *FakePresenter) PresentErrors(errs []twodo.ValidationError) {
-	fp.errs = errs
-}
-
-type FakeRepository struct {
-	todo twodo.Todo
-}
-
-func NewFakePresenter() *FakePresenter {
-	return new(FakePresenter)
-}
-
-func (fr *FakeRepository) Save(t twodo.Todo) (twodo.Todo, error) {
-	fr.todo = t
-
-	return fr.todo, nil
-}
-
-func NewFakeRepository() *FakeRepository {
-	return new(FakeRepository)
-}
 
 func TestCreateService(t *testing.T) {
 	t.Run("Given blank title, it returns invalid fields", func(t *testing.T) {
-		repository := todo.NewMemoryRepository()
+		repository := stubs.NewFakeRepository()
 		usecase := NewCreateTodoUseCase(repository)
-		presenter := NewFakePresenter()
+		presenter := stubs.NewFakePresenter()
 
 		usecase.Run("", "Description", presenter)
 
@@ -55,15 +24,15 @@ func TestCreateService(t *testing.T) {
 			},
 		}
 
-		if !reflect.DeepEqual(presenter.errs, expectedErrs) {
-			t.Errorf("Expected %v to be eq to %v", presenter.errs, expectedErrs)
+		if !reflect.DeepEqual(presenter.Errs, expectedErrs) {
+			t.Errorf("Expected %v to be eq to %v", presenter.Errs, expectedErrs)
 		}
 	})
 
 	t.Run("Given valid args, create and return todo", func(t *testing.T) {
-		repository := NewFakeRepository()
+		repository := stubs.NewFakeRepository()
 		usecase := NewCreateTodoUseCase(repository)
-		presenter := NewFakePresenter()
+		presenter := stubs.NewFakePresenter()
 		todo := twodo.Todo{
 			Title:       "Title",
 			Description: "Description",
@@ -71,12 +40,12 @@ func TestCreateService(t *testing.T) {
 
 		usecase.Run(todo.Title, todo.Description, presenter)
 
-		if repository.todo != todo {
-			t.Errorf("Expected %v to be eq to %v", repository.todo, todo)
+		if repository.Todo != todo {
+			t.Errorf("Expected %v to be eq to %v", repository.Todo, todo)
 		}
 
-		if presenter.todo != todo {
-			t.Errorf("Expected %v to be eq to %v", presenter.todo, todo)
+		if presenter.Todo != todo {
+			t.Errorf("Expected %v to be eq to %v", presenter.Todo, todo)
 		}
 	})
 }
