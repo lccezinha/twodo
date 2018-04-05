@@ -11,8 +11,7 @@ type CreateTodoUseCase struct {
 	validator  twodo.Validator
 }
 
-// Run method will execute the action of create a new Todo
-// Will receiver title, description and a JSONTodoPresenter
+// Run method will execute the action of create a new Todor
 func (c *CreateTodoUseCase) Run(title string, description string, presenter twodo.Presenter) error {
 	todo := twodo.Todo{
 		Title:       title,

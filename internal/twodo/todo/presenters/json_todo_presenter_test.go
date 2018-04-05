@@ -21,29 +21,29 @@ func TestPresentCreatedTodo(t *testing.T) {
 		// CreatedAt:   time.Now(),
 		Done: false,
 	}
-
-	presenter.PresentCreatedTodo(todo)
-
 	expectedBody := []byte(
 		fmt.Sprintf(
-			`{"id":%d,"title":"%s","description":"%s","done":%t}`, todo.ID, todo.Title, todo.Description, todo.Done,
+			`{"id":%d,"title":"%s","description":"%s","done":%t}`,
+			todo.ID, todo.Title, todo.Description, todo.Done,
 		),
 	)
 
+	presenter.PresentCreatedTodo(todo)
+
 	response := w.Result()
+	contentType := response.Header.Get("Content-Type")
 	body, _ := ioutil.ReadAll(response.Body)
+
 	expectedStatus := http.StatusCreated
+	expectedContentType := "application/json"
 
 	if !reflect.DeepEqual(body, expectedBody) {
 		t.Errorf("Expected: %s. Actual: %s", expectedBody, body)
 	}
 
-	if w.Result().StatusCode != expectedStatus {
-		t.Errorf("Expected: %d. Actual: %d", expectedStatus, w.Result().StatusCode)
+	if response.StatusCode != expectedStatus {
+		t.Errorf("Expected: %d. Actual: %d", expectedStatus, response.StatusCode)
 	}
-
-	expectedContentType := "application/json"
-	contentType := w.Result().Header.Get("Content-Type")
 
 	if contentType != expectedContentType {
 		t.Errorf("Expected: %s. Actual: %s", expectedContentType, contentType)

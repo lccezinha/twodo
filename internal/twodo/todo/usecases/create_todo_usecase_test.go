@@ -9,7 +9,7 @@ import (
 )
 
 func TestCreateService(t *testing.T) {
-	t.Run("Given blank title, it returns invalid fields", func(t *testing.T) {
+	t.Run("When has a blank title return invalid fields", func(t *testing.T) {
 		repository := fakes.NewFakeRepository()
 		usecase := NewCreateTodoUseCase(repository)
 		presenter := fakes.NewFakePresenter()
@@ -29,7 +29,7 @@ func TestCreateService(t *testing.T) {
 		}
 	})
 
-	t.Run("Given valid args, create and return todo", func(t *testing.T) {
+	t.Run("When has valid args create and return todo", func(t *testing.T) {
 		repository := fakes.NewFakeRepository()
 		usecase := NewCreateTodoUseCase(repository)
 		presenter := fakes.NewFakePresenter()

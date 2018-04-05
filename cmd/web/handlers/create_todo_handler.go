@@ -14,6 +14,7 @@ type todoParams struct {
 	}
 }
 
+// CreateTodoHandler struct represents create handler
 type CreateTodoHandler struct {
 	UseCase   twodo.CreateUseCase
 	Presenter twodo.Presenter
