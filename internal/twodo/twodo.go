@@ -34,3 +34,8 @@ type Presenter interface {
 	PresentCreatedTodo(todo Todo)
 	PresentErrors(errs []ValidationError)
 }
+
+// CreateUseCase is the interface to create a use case that create a todo
+type CreateUseCase interface {
+	Run(title string, description string, presenter Presenter) error
+}
