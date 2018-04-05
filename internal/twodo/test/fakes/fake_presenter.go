@@ -16,5 +16,5 @@ func (fp *FakePresenter) PresentErrors(errs []twodo.ValidationError) {
 }
 
 func NewFakePresenter() *FakePresenter {
-	return new(FakePresenter)
+	return &FakePresenter{}
 }

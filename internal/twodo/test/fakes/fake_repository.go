@@ -13,5 +13,5 @@ func (fr *FakeRepository) Save(t twodo.Todo) (twodo.Todo, error) {
 }
 
 func NewFakeRepository() *FakeRepository {
-	return new(FakeRepository)
+	return &FakeRepository{}
 }
