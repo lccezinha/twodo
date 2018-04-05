@@ -1,4 +1,4 @@
-package stubs
+package fakes
 
 import "github.com/lccezinha/twodo/internal/twodo"
 
@@ -15,20 +15,6 @@ func (fp *FakePresenter) PresentErrors(errs []twodo.ValidationError) {
 	fp.Errs = errs
 }
 
-type FakeRepository struct {
-	Todo twodo.Todo
-}
-
 func NewFakePresenter() *FakePresenter {
 	return new(FakePresenter)
-}
-
-func (fr *FakeRepository) Save(t twodo.Todo) (twodo.Todo, error) {
-	fr.Todo = t
-
-	return fr.Todo, nil
-}
-
-func NewFakeRepository() *FakeRepository {
-	return new(FakeRepository)
 }

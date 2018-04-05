@@ -5,14 +5,14 @@ import (
 	"testing"
 
 	"github.com/lccezinha/twodo/internal/twodo"
-	stubs "github.com/lccezinha/twodo/internal/twodo/test"
+	"github.com/lccezinha/twodo/internal/twodo/test/fakes"
 )
 
 func TestCreateService(t *testing.T) {
 	t.Run("Given blank title, it returns invalid fields", func(t *testing.T) {
-		repository := stubs.NewFakeRepository()
+		repository := fakes.NewFakeRepository()
 		usecase := NewCreateTodoUseCase(repository)
-		presenter := stubs.NewFakePresenter()
+		presenter := fakes.NewFakePresenter()
 
 		usecase.Run("", "Description", presenter)
 
@@ -30,9 +30,9 @@ func TestCreateService(t *testing.T) {
 	})
 
 	t.Run("Given valid args, create and return todo", func(t *testing.T) {
-		repository := stubs.NewFakeRepository()
+		repository := fakes.NewFakeRepository()
 		usecase := NewCreateTodoUseCase(repository)
-		presenter := stubs.NewFakePresenter()
+		presenter := fakes.NewFakePresenter()
 		todo := twodo.Todo{
 			Title:       "Title",
 			Description: "Description",
