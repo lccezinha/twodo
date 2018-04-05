@@ -65,10 +65,12 @@ func TestPresentTodoErrs(t *testing.T) {
 
 	expectedError := fmt.Sprintf(`{"field":"%s","message":"%s","type":"%s"}`, errs[0].Field, errs[0].Message, errs[0].Type)
 	expectedBody := []byte(`{"errors":[` + expectedError + `]}`)
+	expectedContentType := "application/json"
+	expectedStatus := http.StatusBadRequest
 
 	response := w.Result()
 	body, _ := ioutil.ReadAll(response.Body)
-	expectedStatus := http.StatusBadRequest
+	contentType := w.Result().Header.Get("Content-Type")
 
 	if !reflect.DeepEqual(body, expectedBody) {
 		t.Errorf("Expected: %s. Actual: %s", expectedBody, body)
@@ -77,9 +79,6 @@ func TestPresentTodoErrs(t *testing.T) {
 	if w.Result().StatusCode != expectedStatus {
 		t.Errorf("Expected: %d. Actual: %d", expectedStatus, w.Result().StatusCode)
 	}
-
-	expectedContentType := "application/json"
-	contentType := w.Result().Header.Get("Content-Type")
 
 	if contentType != expectedContentType {
 		t.Errorf("Expected: %s. Actual: %s", expectedContentType, contentType)
