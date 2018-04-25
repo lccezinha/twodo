@@ -33,3 +33,8 @@ func (p *JSONTodoPresenter) renderJSONResponse(status int, data []byte) {
 type showErrs struct {
 	Errors []twodo.ValidationError `json:"errors"`
 }
+
+// Create implement PresenterFactory
+func (p *JSONTodoPresenter) Create(w http.ResponseWriter) *JSONTodoPresenter {
+	return &JSONTodoPresenter{w}
+}
