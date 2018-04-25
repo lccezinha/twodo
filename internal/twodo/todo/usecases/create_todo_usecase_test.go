@@ -4,8 +4,8 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/lccezinha/twodo/internal/test/fakes"
 	"github.com/lccezinha/twodo/internal/twodo"
-	"github.com/lccezinha/twodo/internal/twodo/test/fakes"
 )
 
 func TestCreateService(t *testing.T) {

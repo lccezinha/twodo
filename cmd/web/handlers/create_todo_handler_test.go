@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/lccezinha/twodo/internal/twodo/test/fakes"
+	"github.com/lccezinha/twodo/internal/test/fakes"
 )
 
 func TestCreateTodoHandler(t *testing.T) {
