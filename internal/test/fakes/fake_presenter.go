@@ -1,6 +1,10 @@
 package fakes
 
-import "github.com/lccezinha/twodo/internal/twodo"
+import (
+	"net/http"
+
+	"github.com/lccezinha/twodo/internal/twodo"
+)
 
 type FakePresenter struct {
 	Todo twodo.Todo
@@ -17,4 +21,20 @@ func (fp *FakePresenter) PresentErrors(errs []twodo.ValidationError) {
 
 func NewFakePresenter() *FakePresenter {
 	return &FakePresenter{}
+}
+
+type FakePresenterFactory struct {
+	CreateCalled   bool
+	ResponseWriter http.ResponseWriter
+	Presenter      *FakePresenter
+}
+
+func (pf *FakePresenterFactory) Create(w http.ResponseWriter) twodo.Presenter {
+	pf.CreateCalled = true
+	pf.ResponseWriter = w
+	return pf.Presenter
+}
+
+func NewFakePresenterFactory() *FakePresenterFactory {
+	return &FakePresenterFactory{}
 }

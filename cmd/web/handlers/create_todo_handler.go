@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
+	"github.com/lccezinha/twodo/cmd/web/presenters"
 	"github.com/lccezinha/twodo/internal/twodo"
 )
 
@@ -14,21 +15,19 @@ type todoParams struct {
 
 // CreateTodoHandler struct represents create handler
 type CreateTodoHandler struct {
-	UseCase   twodo.CreateUseCase
-	Presenter twodo.Presenter
+	UseCase          twodo.CreateUseCase
+	PresenterFactory presenters.PresenterFactory
 }
 
 func (c *CreateTodoHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	presenter := c.PresenterFactory.Create(w)
 	var params todoParams
 	json.NewDecoder(r.Body).Decode(&params)
 
-	err := c.UseCase.Run(params.Title, params.Description, c.Presenter)
-	if err != nil {
-		// c.Presenter.PresentErrors(errs)
-	}
+	c.UseCase.Run(params.Title, params.Description, presenter)
 }
 
 // NewCreateTodoHandler works as a factory method
-func NewCreateTodoHandler(u twodo.CreateUseCase, p twodo.Presenter) *CreateTodoHandler {
-	return &CreateTodoHandler{UseCase: u, Presenter: p}
+func NewCreateTodoHandler(u twodo.CreateUseCase, pf presenters.PresenterFactory) *CreateTodoHandler {
+	return &CreateTodoHandler{UseCase: u, PresenterFactory: pf}
 }
