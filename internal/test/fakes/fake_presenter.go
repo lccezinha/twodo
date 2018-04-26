@@ -7,16 +7,21 @@ import (
 )
 
 type FakePresenter struct {
-	Todo twodo.Todo
-	Errs []twodo.ValidationError
+	Todo          twodo.Todo
+	Errs          []twodo.ValidationError
+	allowedMethod string
 }
 
-func (fp *FakePresenter) PresentCreatedTodo(todo twodo.Todo) {
-	fp.Todo = todo
+func (fp *FakePresenter) PresentCreatedTodo(t twodo.Todo) {
+	fp.Todo = t
 }
 
 func (fp *FakePresenter) PresentErrors(errs []twodo.ValidationError) {
 	fp.Errs = errs
+}
+
+func (fp *FakePresenter) PresentInvalidHTTPMethodError(am string) {
+	fp.allowedMethod = am
 }
 
 func NewFakePresenter() *FakePresenter {

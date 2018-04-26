@@ -24,6 +24,13 @@ func (p *JSONTodoPresenter) PresentErrors(errs []twodo.ValidationError) {
 	p.renderJSONResponse(http.StatusBadRequest, errsJSON)
 }
 
+// PresentInvalidHTTPMethodError response when http is called using wrong method
+func (p *JSONTodoPresenter) PresentInvalidHTTPMethodError(am string) {
+	p.ResponseWriter.Header().Set("allowed", am)
+	p.ResponseWriter.Header().Set("error_message", "Wrong HTTP method")
+	p.ResponseWriter.WriteHeader(http.StatusMethodNotAllowed)
+}
+
 func (p *JSONTodoPresenter) renderJSONResponse(status int, data []byte) {
 	p.ResponseWriter.Header().Set("Content-type", "application/json")
 	p.ResponseWriter.WriteHeader(status)
@@ -35,6 +42,10 @@ type showErrs struct {
 }
 
 // Create implement PresenterFactory
-func (p *JSONTodoPresenter) Create(w http.ResponseWriter) *JSONTodoPresenter {
+func (p JSONTodoPresenter) Create(w http.ResponseWriter) twodo.Presenter {
 	return &JSONTodoPresenter{w}
+}
+
+func NewPresenterFactory() PresenterFactory {
+	return JSONTodoPresenter{}
 }

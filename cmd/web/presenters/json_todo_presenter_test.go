@@ -84,3 +84,24 @@ func TestPresentTodoErrs(t *testing.T) {
 		t.Errorf("Expected: %s. Actual: %s", expectedContentType, contentType)
 	}
 }
+
+func TestPresentInvalidHTTPMethodError(t *testing.T) {
+	w := httptest.NewRecorder()
+	presenter := JSONTodoPresenter{w}
+	presenter.PresentInvalidHTTPMethodError("POST")
+	response := w.Result()
+	expectedErrorMessage := "Wrong HTTP method"
+	expectedHTTPMethod := "POST"
+
+	if response.Header.Get("allowed") != "POST" {
+		t.Errorf("Expected: %s. Actual: %s", expectedHTTPMethod, response.Header.Get("allowed"))
+	}
+
+	if response.Header.Get("error_message") != expectedErrorMessage {
+		t.Errorf("Expected: %s. Actual: %s", expectedErrorMessage, response.Header.Get("error_message"))
+	}
+
+	if response.StatusCode != http.StatusMethodNotAllowed {
+		t.Errorf("Expected: %d. Actual: %d", http.StatusMethodNotAllowed, response.StatusCode)
+	}
+}
