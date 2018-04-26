@@ -18,8 +18,8 @@ func TestCreateTodoHandler(t *testing.T) {
 			PresenterFactory: presenterFactory,
 		}
 
-		title := "Xunda"
-		description := "Description Xunda"
+		title := "Title"
+		description := "Description"
 		params := `{"title": "` + title + `", "description": "` + description + `"}`
 
 		response := httptest.NewRecorder()
