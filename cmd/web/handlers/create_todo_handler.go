@@ -19,6 +19,7 @@ type CreateTodoHandler struct {
 	PresenterFactory presenters.PresenterFactory
 }
 
+// TODO: needs to validate the request method
 func (c *CreateTodoHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	presenter := c.PresenterFactory.Create(w)
 	var params todoParams

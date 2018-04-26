@@ -33,6 +33,7 @@ type Validator interface {
 type Presenter interface {
 	PresentCreatedTodo(todo Todo)
 	PresentErrors(errs []ValidationError)
+	PresentInvalidHTTPMethodError(allowedMethod string)
 }
 
 // CreateUseCase is the interface to create a use case that create a todo
