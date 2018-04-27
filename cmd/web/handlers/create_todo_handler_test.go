@@ -22,7 +22,7 @@ func TestCreateTodoHandler(t *testing.T) {
 		params := `{"description": "` + description + `"}`
 
 		response := httptest.NewRecorder()
-		request := httptest.NewRequest("POST", "http://localhost:8080/api/v1/todos", strings.NewReader(params))
+		request := httptest.NewRequest("POST", "http://localhost:8888/api/v1/todos", strings.NewReader(params))
 
 		handler.ServeHTTP(response, request)
 

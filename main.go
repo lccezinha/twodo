@@ -4,12 +4,12 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/lccezinha/twodo/cmd/web/app"
+	"github.com/lccezinha/twodo/cmd/web/application"
 )
 
 func main() {
-	router := app.InitializeRouter()
-	port := ":8080"
+	router := application.InitializeRouter()
+	port := ":8888"
 
 	err := http.ListenAndServe(port, router)
 	if err != nil {
