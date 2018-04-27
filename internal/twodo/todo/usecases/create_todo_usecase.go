@@ -12,9 +12,8 @@ type CreateTodoUseCase struct {
 }
 
 // Run method will execute the action of create a new Todor
-func (c *CreateTodoUseCase) Run(title string, description string, presenter twodo.Presenter) error {
+func (c *CreateTodoUseCase) Run(description string, presenter twodo.Presenter) error {
 	todo := twodo.Todo{
-		Title:       title,
 		Description: description,
 		// CreatedAt:   time.Now(),
 		Done: false,

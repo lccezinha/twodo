@@ -18,9 +18,8 @@ func TestCreateTodoHandler(t *testing.T) {
 			PresenterFactory: presenterFactory,
 		}
 
-		title := "Title"
 		description := "Description"
-		params := `{"title": "` + title + `", "description": "` + description + `"}`
+		params := `{"description": "` + description + `"}`
 
 		response := httptest.NewRecorder()
 		request := httptest.NewRequest("POST", "http://localhost:8080/api/v1/todos", strings.NewReader(params))
@@ -28,11 +27,7 @@ func TestCreateTodoHandler(t *testing.T) {
 		handler.ServeHTTP(response, request)
 
 		if presenterFactory.ResponseWriter != response {
-			t.Errorf("Expected: %v. Actual: %v", title, presenterFactory.ResponseWriter)
-		}
-
-		if usecase.Title != title {
-			t.Errorf("Expected: %v. Actual: %v", title, usecase.Title)
+			t.Errorf("Expected: %v. Actual: %v", response, presenterFactory.ResponseWriter)
 		}
 
 		if usecase.Description != description {

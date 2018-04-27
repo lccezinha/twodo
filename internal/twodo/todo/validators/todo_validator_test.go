@@ -8,12 +8,12 @@ import (
 )
 
 func TestTodoValidator(t *testing.T) {
-	t.Run("When todo title is blank, it returns errs", func(t *testing.T) {
+	t.Run("When todo description is blank, it returns errs", func(t *testing.T) {
 		validator := TodoValidator{}
-		todo := twodo.Todo{Title: ""}
+		todo := twodo.Todo{Description: ""}
 		expectedErrs := []twodo.ValidationError{
 			twodo.ValidationError{
-				Field:   "Title",
+				Field:   "Description",
 				Message: "Can not be blank",
 				Type:    "Required",
 			},

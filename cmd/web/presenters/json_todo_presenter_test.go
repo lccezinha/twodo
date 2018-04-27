@@ -16,15 +16,14 @@ func TestPresentCreatedTodo(t *testing.T) {
 	presenter := JSONTodoPresenter{w}
 	todo := twodo.Todo{
 		ID:          1,
-		Title:       "Title",
 		Description: "Description",
 		// CreatedAt:   time.Now(),
 		Done: false,
 	}
 	expectedBody := []byte(
 		fmt.Sprintf(
-			`{"id":%d,"title":"%s","description":"%s","done":%t}`,
-			todo.ID, todo.Title, todo.Description, todo.Done,
+			`{"id":%d,"description":"%s","done":%t}`,
+			todo.ID, todo.Description, todo.Done,
 		),
 	)
 

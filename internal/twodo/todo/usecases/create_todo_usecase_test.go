@@ -9,16 +9,16 @@ import (
 )
 
 func TestCreateService(t *testing.T) {
-	t.Run("When has a blank title return invalid fields", func(t *testing.T) {
+	t.Run("When has a blank description return invalid fields", func(t *testing.T) {
 		repository := fakes.NewFakeRepository()
 		usecase := NewCreateTodoUseCase(repository)
 		presenter := fakes.NewFakePresenter()
 
-		usecase.Run("", "Description", presenter)
+		usecase.Run("", presenter)
 
 		expectedErrs := []twodo.ValidationError{
 			twodo.ValidationError{
-				Field:   "Title",
+				Field:   "Description",
 				Message: "Can not be blank",
 				Type:    "Required",
 			},
@@ -33,16 +33,9 @@ func TestCreateService(t *testing.T) {
 		repository := fakes.NewFakeRepository()
 		usecase := NewCreateTodoUseCase(repository)
 		presenter := fakes.NewFakePresenter()
-		todo := twodo.Todo{
-			Title:       "Title",
-			Description: "Description",
-		}
+		todo := twodo.Todo{Description: "Description"}
 
-		usecase.Run(todo.Title, todo.Description, presenter)
-
-		if repository.Todo != todo {
-			t.Errorf("Expected %v to be eq to %v", repository.Todo, todo)
-		}
+		usecase.Run(todo.Description, presenter)
 
 		if presenter.Todo != todo {
 			t.Errorf("Expected %v to be eq to %v", presenter.Todo, todo)

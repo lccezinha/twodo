@@ -3,7 +3,6 @@ package twodo
 // Todo hold todo information
 type Todo struct {
 	ID          int    `json:"id"`
-	Title       string `json:"title"`
 	Description string `json:"description"`
 	// CreatedAt   time.Time `json:"created_at"`
 	Done bool `json:"done"`
@@ -38,5 +37,5 @@ type Presenter interface {
 
 // CreateUseCase is the interface to create a use case that create a todo
 type CreateUseCase interface {
-	Run(title string, description string, presenter Presenter) error
+	Run(description string, presenter Presenter) error
 }

@@ -9,9 +9,9 @@ type TodoValidator struct{}
 func (v TodoValidator) Validate(todo twodo.Todo) []twodo.ValidationError {
 	errs := []twodo.ValidationError{}
 
-	if todo.Title == "" {
+	if todo.Description == "" {
 		err := twodo.ValidationError{
-			Field:   "Title",
+			Field:   "Description",
 			Message: "Can not be blank",
 			Type:    "Required",
 		}

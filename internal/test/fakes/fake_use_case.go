@@ -4,13 +4,11 @@ import "github.com/lccezinha/twodo/internal/twodo"
 
 type FakeUseCase struct {
 	Repository  twodo.Repository
-	Title       string
 	Description string
 	Presenter   twodo.Presenter
 }
 
-func (fu *FakeUseCase) Run(title string, description string, presenter twodo.Presenter) error {
-	fu.Title = title
+func (fu *FakeUseCase) Run(description string, presenter twodo.Presenter) error {
 	fu.Description = description
 	fu.Presenter = presenter
 	return nil

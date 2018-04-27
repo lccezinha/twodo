@@ -9,7 +9,6 @@ import (
 )
 
 type todoParams struct {
-	Title       string
 	Description string
 }
 
@@ -24,7 +23,7 @@ func (c *CreateTodoHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	presenter := c.PresenterFactory.Create(w)
 	var params todoParams
 	json.NewDecoder(r.Body).Decode(&params)
-	c.UseCase.Run(params.Title, params.Description, presenter)
+	c.UseCase.Run(params.Description, presenter)
 }
 
 // NewCreateTodoHandler works as a factory method
