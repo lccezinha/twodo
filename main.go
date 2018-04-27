@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	router := app.IntializeRouter()
+	router := app.InitializeRouter()
 	port := ":8080"
 
 	err := http.ListenAndServe(port, router)
