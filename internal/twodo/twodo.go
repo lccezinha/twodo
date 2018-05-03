@@ -18,7 +18,7 @@ type ValidationError struct {
 // Repository is the basic interface to implement each Repository
 type Repository interface {
 	Save(Todo) (Todo, error)
-	// ListAll() ([]Todo, error)
+	ListAll() ([]Todo, error)
 	// Destroy(id int) error
 	// Update(id int, done bool) (Todo, error)
 }
@@ -32,10 +32,16 @@ type Validator interface {
 type Presenter interface {
 	PresentCreatedTodo(todo Todo)
 	PresentErrors(errs []ValidationError)
+	PresentListTodos([]Todo)
 	PresentInvalidHTTPMethodError(allowedMethod string)
 }
 
 // CreateUseCase is the interface to create a use case that create a todo
 type CreateUseCase interface {
 	Run(description string, presenter Presenter) error
+}
+
+// ListAllUseCase is the inferface to create a user case that list all todos
+type ListAllUseCase interface {
+	Run(presenter Presenter) ([]Todo, error)
 }

@@ -104,3 +104,51 @@ func TestPresentInvalidHTTPMethodError(t *testing.T) {
 		t.Errorf("Expected: %d. Actual: %d", http.StatusMethodNotAllowed, response.StatusCode)
 	}
 }
+
+func TestPresentListTodos(t *testing.T) {
+	t.Run("Return presenter with empty list", func(t *testing.T) {
+		w := httptest.NewRecorder()
+		presenter := JSONTodoPresenter{w}
+		todos := []twodo.Todo{}
+		presenter.PresentListTodos(todos)
+		expectedStatus := http.StatusOK
+		response := w.Result()
+		body, _ := ioutil.ReadAll(response.Body)
+		expectedBody := []byte(fmt.Sprint(`[]`))
+
+		if response.StatusCode != expectedStatus {
+			t.Errorf("Expected: %d. Actual: %d", expectedStatus, response.StatusCode)
+		}
+
+		if !reflect.DeepEqual(body, expectedBody) {
+			t.Errorf("Expected: %s. Actual: %s", expectedBody, body)
+		}
+	})
+
+	t.Run("Return presenter with filled list", func(t *testing.T) {
+		w := httptest.NewRecorder()
+		presenter := JSONTodoPresenter{w}
+		todoOne := twodo.Todo{ID: 1, Description: "Some Todo #1", Done: true}
+		todoTwo := twodo.Todo{ID: 2, Description: "Some Todo #2", Done: false}
+		todos := []twodo.Todo{todoOne, todoTwo}
+		presenter.PresentListTodos(todos)
+		expectedStatus := http.StatusOK
+		response := w.Result()
+		body, _ := ioutil.ReadAll(response.Body)
+		expectedBody := []byte(
+			fmt.Sprintf(
+				`[{"id":%d,"description":"%s","done":%t},{"id":%d,"description":"%s","done":%t}]`,
+				todoOne.ID, todoOne.Description, todoOne.Done,
+				todoTwo.ID, todoTwo.Description, todoTwo.Done,
+			),
+		)
+
+		if response.StatusCode != expectedStatus {
+			t.Errorf("Expected: %d. Actual: %d", expectedStatus, response.StatusCode)
+		}
+
+		if !reflect.DeepEqual(body, expectedBody) {
+			t.Errorf("Expected: %s. Actual: %s", expectedBody, body)
+		}
+	})
+}

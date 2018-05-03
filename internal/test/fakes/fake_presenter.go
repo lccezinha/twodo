@@ -9,6 +9,7 @@ import (
 type FakePresenter struct {
 	Todo          twodo.Todo
 	Errs          []twodo.ValidationError
+	List          []twodo.Todo
 	allowedMethod string
 }
 
@@ -18,6 +19,10 @@ func (fp *FakePresenter) PresentCreatedTodo(t twodo.Todo) {
 
 func (fp *FakePresenter) PresentErrors(errs []twodo.ValidationError) {
 	fp.Errs = errs
+}
+
+func (fp *FakePresenter) PresentListTodos(todos []twodo.Todo) {
+	fp.List = todos
 }
 
 func (fp *FakePresenter) PresentInvalidHTTPMethodError(am string) {

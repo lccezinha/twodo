@@ -12,6 +12,10 @@ func (fr *FakeRepository) Save(t twodo.Todo) (twodo.Todo, error) {
 	return fr.Todo, nil
 }
 
+func (fr *FakeRepository) ListAll() ([]twodo.Todo, error) {
+	return []twodo.Todo{}, nil
+}
+
 func NewFakeRepository() *FakeRepository {
 	return &FakeRepository{}
 }

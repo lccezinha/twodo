@@ -24,6 +24,12 @@ func (p *JSONTodoPresenter) PresentErrors(errs []twodo.ValidationError) {
 	p.renderJSONResponse(http.StatusBadRequest, errsJSON)
 }
 
+// PresentListTodos will present all todos as JSON
+func (p *JSONTodoPresenter) PresentListTodos(todos []twodo.Todo) {
+	todosJSON, _ := json.Marshal(todos)
+	p.renderJSONResponse(http.StatusOK, todosJSON)
+}
+
 // PresentInvalidHTTPMethodError response when http is called using wrong method
 func (p *JSONTodoPresenter) PresentInvalidHTTPMethodError(am string) {
 	p.ResponseWriter.Header().Set("allowed", am)

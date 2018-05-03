@@ -8,7 +8,7 @@ import (
 	"github.com/lccezinha/twodo/internal/twodo"
 )
 
-func TestCreateService(t *testing.T) {
+func TestCreateUseCase(t *testing.T) {
 	t.Run("When has a blank description return invalid fields", func(t *testing.T) {
 		repository := fakes.NewFakeRepository()
 		usecase := NewCreateTodoUseCase(repository)
