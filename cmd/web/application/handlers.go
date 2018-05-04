@@ -9,16 +9,19 @@ import (
 
 // Handlers is a simple struct that hold all app handlers
 type Handlers struct {
-	CreateTodo *handlers.CreateTodoHandler
+	CreateTodo   *handlers.CreateTodoHandler
+	ListAllTodos *handlers.ListAllTodosHandler
 }
 
 // InitializeHandlers will return all handler initialized
 func InitializeHandlers() *Handlers {
 	repository := todo.NewMemoryRepository()
-	useCase := usecases.NewCreateTodoUseCase(repository)
+	createUseCase := usecases.NewCreateTodoUseCase(repository)
+	listAllUseCase := usecases.NewListAllUseCase(repository)
 	presenterFactory := presenters.NewPresenterFactory()
 
 	return &Handlers{
-		CreateTodo: handlers.NewCreateTodoHandler(useCase, presenterFactory),
+		CreateTodo:   handlers.NewCreateTodoHandler(createUseCase, presenterFactory),
+		ListAllTodos: handlers.NewListAllTodosHandler(listAllUseCase, presenterFactory),
 	}
 }

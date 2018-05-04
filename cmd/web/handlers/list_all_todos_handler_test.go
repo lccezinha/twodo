@@ -16,11 +16,6 @@ func TestListAllTodos(t *testing.T) {
 		PresenterFactory: presenterFactory,
 	}
 
-	// todos := []twodo.Todo{
-	// 	twodo.Todo{ID: 1, Description: "Todo #1"},
-	// 	twodo.Todo{ID: 2, Description: "Todo #2"},
-	// }
-
 	response := httptest.NewRecorder()
 	request := httptest.NewRequest("GET", "http://localhost:8888/api/v1/todos", nil)
 
