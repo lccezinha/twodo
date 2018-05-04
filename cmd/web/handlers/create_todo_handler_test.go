@@ -11,7 +11,7 @@ import (
 func TestCreateTodoHandler(t *testing.T) {
 	t.Run("Given valid args, call use case with args", func(t *testing.T) {
 		repository := fakes.NewFakeRepository()
-		usecase := fakes.NewFakeUseCase(repository)
+		usecase := fakes.NewFakeCreateUseCase(repository)
 		presenterFactory := fakes.NewFakePresenterFactory()
 		handler := CreateTodoHandler{
 			UseCase:          usecase,
