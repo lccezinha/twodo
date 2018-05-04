@@ -131,7 +131,9 @@ func TestPresentListTodos(t *testing.T) {
 		todoOne := twodo.Todo{ID: 1, Description: "Some Todo #1", Done: true}
 		todoTwo := twodo.Todo{ID: 2, Description: "Some Todo #2", Done: false}
 		todos := []twodo.Todo{todoOne, todoTwo}
+
 		presenter.PresentListTodos(todos)
+
 		expectedStatus := http.StatusOK
 		response := w.Result()
 		body, _ := ioutil.ReadAll(response.Body)

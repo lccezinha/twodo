@@ -7,9 +7,12 @@ import (
 )
 
 type FakePresenter struct {
-	Todo          twodo.Todo
-	Errs          []twodo.ValidationError
+	Todo twodo.Todo
+	Errs []twodo.ValidationError
+
+	ListArgCalled bool
 	List          []twodo.Todo
+
 	allowedMethod string
 }
 
@@ -22,6 +25,7 @@ func (fp *FakePresenter) PresentErrors(errs []twodo.ValidationError) {
 }
 
 func (fp *FakePresenter) PresentListTodos(todos []twodo.Todo) {
+	fp.ListArgCalled = true
 	fp.List = todos
 }
 

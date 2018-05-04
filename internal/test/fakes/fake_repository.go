@@ -3,7 +3,8 @@ package fakes
 import "github.com/lccezinha/twodo/internal/twodo"
 
 type FakeRepository struct {
-	Todo twodo.Todo
+	Todo          twodo.Todo
+	ListAllResult []twodo.Todo
 }
 
 func (fr *FakeRepository) Save(t twodo.Todo) (twodo.Todo, error) {
@@ -13,7 +14,7 @@ func (fr *FakeRepository) Save(t twodo.Todo) (twodo.Todo, error) {
 }
 
 func (fr *FakeRepository) ListAll() ([]twodo.Todo, error) {
-	return []twodo.Todo{}, nil
+	return fr.ListAllResult, nil
 }
 
 func NewFakeRepository() *FakeRepository {
