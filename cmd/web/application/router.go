@@ -1,14 +1,18 @@
 package application
 
-import "net/http"
+import (
+	"net/http"
+
+	"github.com/julienschmidt/httprouter"
+)
 
 // InitializeRouter will return all handler
 func InitializeRouter() http.Handler {
 	handlers := InitializeHandlers()
 
-	router := http.NewServeMux()
-	router.Handle("/api/v1/todos", handlers.CreateTodo)
-	router.Handle("/api/v1/todoslist", handlers.ListAllTodos)
+	router := httprouter.New()
+	router.Handler(http.MethodGet, "/api/v1/todos", handlers.ListAllTodos)
+	router.Handler(http.MethodPost, "/api/v1/todos", handlers.CreateTodo)
 
 	return router
 }
