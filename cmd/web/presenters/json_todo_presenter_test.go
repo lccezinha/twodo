@@ -154,3 +154,17 @@ func TestPresentListTodos(t *testing.T) {
 		}
 	})
 }
+
+func TestPresentDestroyed(t *testing.T) {
+	w := httptest.NewRecorder()
+	presenter := JSONTodoPresenter{w}
+
+	presenter.PresentDestroyed()
+
+	expectedStatus := http.StatusNoContent
+	response := w.Result()
+
+	if response.StatusCode != expectedStatus {
+		t.Errorf("Expected: %d. Actual: %d", expectedStatus, response.StatusCode)
+	}
+}

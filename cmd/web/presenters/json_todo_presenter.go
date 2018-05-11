@@ -37,6 +37,12 @@ func (p *JSONTodoPresenter) PresentInvalidHTTPMethodError(am string) {
 	p.ResponseWriter.WriteHeader(http.StatusMethodNotAllowed)
 }
 
+// PresentDestroyed response when some todo is destroyed
+func (p *JSONTodoPresenter) PresentDestroyed() {
+	p.ResponseWriter.Header().Set("Content-type", "application/json")
+	p.ResponseWriter.WriteHeader(http.StatusNoContent)
+}
+
 func (p *JSONTodoPresenter) renderJSONResponse(status int, data []byte) {
 	p.ResponseWriter.Header().Set("Content-type", "application/json")
 	p.ResponseWriter.WriteHeader(status)

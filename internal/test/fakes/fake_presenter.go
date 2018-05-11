@@ -13,7 +13,9 @@ type FakePresenter struct {
 	ListArgCalled bool
 	List          []twodo.Todo
 
-	allowedMethod string
+	AllowedMethod string
+
+	DestroyArgCalled bool
 }
 
 func (fp *FakePresenter) PresentCreatedTodo(t twodo.Todo) {
@@ -30,7 +32,11 @@ func (fp *FakePresenter) PresentListTodos(todos []twodo.Todo) {
 }
 
 func (fp *FakePresenter) PresentInvalidHTTPMethodError(am string) {
-	fp.allowedMethod = am
+	fp.AllowedMethod = am
+}
+
+func (fp *FakePresenter) PresentDestroyed() {
+	fp.DestroyArgCalled = true
 }
 
 func NewFakePresenter() *FakePresenter {

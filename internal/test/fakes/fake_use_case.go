@@ -31,3 +31,16 @@ func (fu *FakeListUseCase) Run(presenter twodo.Presenter) ([]twodo.Todo, error) 
 func NewFakeListUseCase(r twodo.Repository) *FakeListUseCase {
 	return &FakeListUseCase{Repository: r}
 }
+
+type FakeDestroyUseCase struct {
+	Repository twodo.Repository
+	Presenter  twodo.Presenter
+}
+
+func (fd *FakeDestroyUseCase) Run(id int, presenter twodo.Presenter) error {
+	return nil
+}
+
+func NewDestroyUseCase(r twodo.Repository) *FakeDestroyUseCase {
+	return &FakeDestroyUseCase{Repository: r}
+}

@@ -17,6 +17,10 @@ func (fr *FakeRepository) ListAll() ([]twodo.Todo, error) {
 	return fr.ListAllResult, nil
 }
 
+func (fr *FakeRepository) Destroy(id int) error {
+	return nil
+}
+
 func NewFakeRepository() *FakeRepository {
 	return &FakeRepository{}
 }

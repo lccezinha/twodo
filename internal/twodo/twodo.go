@@ -19,7 +19,7 @@ type ValidationError struct {
 type Repository interface {
 	Save(Todo) (Todo, error)
 	ListAll() ([]Todo, error)
-	// Destroy(id int) error
+	Destroy(id int) error
 	// Update(id int, done bool) (Todo, error)
 }
 
@@ -34,14 +34,20 @@ type Presenter interface {
 	PresentErrors(errs []ValidationError)
 	PresentListTodos([]Todo)
 	PresentInvalidHTTPMethodError(allowedMethod string)
+	PresentDestroyed()
 }
 
-// CreateUseCase is the interface to create a use case that create a todo
+// CreateUseCase is the interface to create a usecase that create a todo
 type CreateUseCase interface {
 	Run(description string, presenter Presenter) error
 }
 
-// ListAllUseCase is the inferface to create a user case that list all todos
+// ListAllUseCase is the inferface to create a usecase that list all todos
 type ListAllUseCase interface {
 	Run(presenter Presenter) ([]Todo, error)
+}
+
+// DestroyUseCase is the inferface to a usecase the destroy a todo
+type DestroyUseCase interface {
+	Run(id int, presenter Presenter) error
 }
