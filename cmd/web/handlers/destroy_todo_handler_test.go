@@ -10,7 +10,7 @@ import (
 func TestDestroyTodoHandler(t *testing.T) {
 	t.Run("Given a valid id remove it", func(t *testing.T) {
 		repository := fakes.NewFakeRepository()
-		usecase := fakes.NewDestroyUseCase(repository)
+		usecase := fakes.NewFakeDestroyUseCase(repository)
 		presenterFactory := fakes.NewFakePresenterFactory()
 		handler := DestroyTodoHandler{
 			UseCase:          usecase,

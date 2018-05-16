@@ -41,6 +41,19 @@ func (fd *FakeDestroyUseCase) Run(id int, presenter twodo.Presenter) error {
 	return nil
 }
 
-func NewDestroyUseCase(r twodo.Repository) *FakeDestroyUseCase {
+func NewFakeDestroyUseCase(r twodo.Repository) *FakeDestroyUseCase {
 	return &FakeDestroyUseCase{Repository: r}
+}
+
+type FakeMarkAsDoneUseCase struct {
+	Repository twodo.Repository
+	Presenter  twodo.Presenter
+}
+
+func (fm *FakeMarkAsDoneUseCase) Run(id int, presenter twodo.Presenter) error {
+	return nil
+}
+
+func NewFakeMarkAsDoneUseCase(r twodo.Repository) *FakeMarkAsDoneUseCase {
+	return &FakeMarkAsDoneUseCase{Repository: r}
 }

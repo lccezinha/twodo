@@ -55,5 +55,5 @@ type DestroyUseCase interface {
 
 // MarkAsDoneUseCase is the interface to a use case that mark as done
 type MarkAsDoneUseCase interface {
-	Run(id int) error
+	Run(id int, presenter Presenter) error
 }

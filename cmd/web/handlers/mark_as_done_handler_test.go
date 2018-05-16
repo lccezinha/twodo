@@ -7,17 +7,17 @@ import (
 	"github.com/lccezinha/twodo/internal/test/fakes"
 )
 
-func TestListAllTodosHandler(t *testing.T) {
+func TestMarkAsDoneHandler(t *testing.T) {
 	repository := fakes.NewFakeRepository()
-	usecase := fakes.NewFakeListUseCase(repository)
+	usecase := fakes.NewFakeMarkAsDoneUseCase(repository)
 	presenterFactory := fakes.NewFakePresenterFactory()
-	handler := ListAllTodosHandler{
+	handler := MarkAsDoneHandler{
 		UseCase:          usecase,
 		PresenterFactory: presenterFactory,
 	}
 
 	response := httptest.NewRecorder()
-	request := httptest.NewRequest("GET", "http://localhost:8888/api/v1/todos", nil)
+	request := httptest.NewRequest("PUT", "http://localhost:8888/api/v1/todos/1", nil)
 
 	handler.ServeHTTP(response, request)
 
