@@ -1,6 +1,8 @@
 package fakes
 
-import "github.com/lccezinha/twodo/internal/twodo"
+import (
+	"github.com/lccezinha/twodo/internal/twodo"
+)
 
 type FakeRepository struct {
 	Todo          twodo.Todo
@@ -19,6 +21,10 @@ func (fr *FakeRepository) ListAll() ([]twodo.Todo, error) {
 
 func (fr *FakeRepository) Destroy(id int) error {
 	return nil
+}
+
+func (fr *FakeRepository) Update(id int, done bool) (twodo.Todo, error) {
+	return fr.Todo, nil
 }
 
 func NewFakeRepository() *FakeRepository {

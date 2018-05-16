@@ -20,7 +20,7 @@ type Repository interface {
 	Save(Todo) (Todo, error)
 	ListAll() ([]Todo, error)
 	Destroy(id int) error
-	// Update(id int, done bool) (Todo, error)
+	Update(id int, done bool) (Todo, error)
 }
 
 // Validator is the interface to create Todos validations
@@ -48,7 +48,12 @@ type ListAllUseCase interface {
 	Run(presenter Presenter) ([]Todo, error)
 }
 
-// DestroyUseCase is the inferface to a usecase the destroy a todo
+// DestroyUseCase is the inferface to a usecase that destroy a todo
 type DestroyUseCase interface {
 	Run(id int, presenter Presenter) error
+}
+
+// MarkAsDoneUseCase is the interface to a use case that mark as done
+type MarkAsDoneUseCase interface {
+	Run(id int) error
 }
