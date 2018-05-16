@@ -35,6 +35,7 @@ type Presenter interface {
 	PresentListTodos([]Todo)
 	PresentInvalidHTTPMethodError(allowedMethod string)
 	PresentDestroyed()
+	PresentUpdated(todo Todo)
 }
 
 // CreateUseCase is the interface to create a usecase that create a todo

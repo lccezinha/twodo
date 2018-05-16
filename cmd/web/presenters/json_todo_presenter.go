@@ -43,6 +43,12 @@ func (p *JSONTodoPresenter) PresentDestroyed() {
 	p.ResponseWriter.WriteHeader(http.StatusNoContent)
 }
 
+// PresentUpdated response when some todo is updated
+func (p *JSONTodoPresenter) PresentUpdated(todo twodo.Todo) {
+	todoJSON, _ := json.Marshal(todo)
+	p.renderJSONResponse(http.StatusOK, todoJSON)
+}
+
 func (p *JSONTodoPresenter) renderJSONResponse(status int, data []byte) {
 	p.ResponseWriter.Header().Set("Content-type", "application/json")
 	p.ResponseWriter.WriteHeader(status)

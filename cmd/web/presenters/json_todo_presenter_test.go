@@ -168,3 +168,26 @@ func TestPresentDestroyed(t *testing.T) {
 		t.Errorf("Expected: %d. Actual: %d", expectedStatus, response.StatusCode)
 	}
 }
+
+func TestPresentUpdated(t *testing.T) {
+	w := httptest.NewRecorder()
+	presenter := JSONTodoPresenter{w}
+	todo := twodo.Todo{ID: 1, Description: "Description", Done: false}
+
+	presenter.PresentUpdated(todo)
+
+	expectedStatus := http.StatusOK
+	response := w.Result()
+	body, _ := ioutil.ReadAll(response.Body)
+	expectedBody := []byte(
+		fmt.Sprintf(`{"id":%d,"description":"%s","done":%t}`, todo.ID, todo.Description, todo.Done),
+	)
+
+	if response.StatusCode != expectedStatus {
+		t.Errorf("Expected: %d. Actual: %d", expectedStatus, response.StatusCode)
+	}
+
+	if !reflect.DeepEqual(expectedBody, body) {
+		t.Errorf("Expected: %v. Received: %v", expectedBody, body)
+	}
+}
