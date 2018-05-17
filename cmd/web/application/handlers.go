@@ -12,6 +12,7 @@ type Handlers struct {
 	CreateTodo   *handlers.CreateTodoHandler
 	ListAllTodos *handlers.ListAllTodosHandler
 	DestroyTodo  *handlers.DestroyTodoHandler
+	MarkAsDone   *handlers.MarkAsDoneHandler
 }
 
 // InitializeHandlers will return all handler initialized
@@ -20,11 +21,13 @@ func InitializeHandlers() *Handlers {
 	createUseCase := usecases.NewCreateTodoUseCase(repository)
 	listAllUseCase := usecases.NewListAllUseCase(repository)
 	destroyUseCase := usecases.NewDestroyUseCase(repository)
+	markAsDoneUseCase := usecases.NewMarkAsDoneUseCase(repository)
 	presenterFactory := presenters.NewPresenterFactory()
 
 	return &Handlers{
 		CreateTodo:   handlers.NewCreateTodoHandler(createUseCase, presenterFactory),
 		ListAllTodos: handlers.NewListAllTodosHandler(listAllUseCase, presenterFactory),
 		DestroyTodo:  handlers.NewDestroyTodoHandler(destroyUseCase, presenterFactory),
+		MarkAsDone:   handlers.NewMarkAsDoneHandler(markAsDoneUseCase, presenterFactory),
 	}
 }

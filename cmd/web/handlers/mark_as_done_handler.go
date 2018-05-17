@@ -3,8 +3,8 @@ package handlers
 import (
 	"net/http"
 	"strconv"
-	"strings"
 
+	"github.com/julienschmidt/httprouter"
 	"github.com/lccezinha/twodo/cmd/web/presenters"
 	"github.com/lccezinha/twodo/internal/twodo"
 )
@@ -16,9 +16,8 @@ type MarkAsDoneHandler struct {
 
 func (m *MarkAsDoneHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	presenter := m.PresenterFactory.Create(w)
-	path := strings.Split(r.URL.Path, "/")
-	idString := path[len(path)-1]
-	id, _ := strconv.Atoi(idString)
+	params := httprouter.ParamsFromContext(r.Context())
+	id, _ := strconv.Atoi(params.ByName("id"))
 	m.UseCase.Run(id, presenter)
 }
 

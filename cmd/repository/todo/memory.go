@@ -60,6 +60,7 @@ func (m *MemoryRepository) Destroy(id int) error {
 func (m *MemoryRepository) Update(id int, done bool) (twodo.Todo, error) {
 	if todo, ok := m.data[id]; ok {
 		todo.Done = done
+		m.data[id] = todo
 		return todo, nil
 	}
 
