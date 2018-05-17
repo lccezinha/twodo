@@ -57,3 +57,16 @@ func (fm *FakeMarkAsDoneUseCase) Run(id int, presenter twodo.Presenter) error {
 func NewFakeMarkAsDoneUseCase(r twodo.Repository) *FakeMarkAsDoneUseCase {
 	return &FakeMarkAsDoneUseCase{Repository: r}
 }
+
+type FakeMarkAsUndoneUseCase struct {
+	Repository twodo.Repository
+	Presenter  twodo.Presenter
+}
+
+func (fm *FakeMarkAsUndoneUseCase) Run(id int, presenter twodo.Presenter) error {
+	return nil
+}
+
+func NewFakeMarkAsUndoneUseCase(r twodo.Repository) *FakeMarkAsUndoneUseCase {
+	return &FakeMarkAsUndoneUseCase{Repository: r}
+}

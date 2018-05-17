@@ -10,18 +10,18 @@ import (
 	"github.com/lccezinha/twodo/internal/test/fakes"
 )
 
-func TestMarkAsDoneHandler(t *testing.T) {
+func TestMarkAsUndoneHandler(t *testing.T) {
 	repository := fakes.NewFakeRepository()
-	usecase := fakes.NewFakeMarkAsDoneUseCase(repository)
+	usecase := fakes.NewFakeMarkAsUndoneUseCase(repository)
 	presenterFactory := fakes.NewFakePresenterFactory()
-	handler := MarkAsDoneHandler{
+	handler := MarkAsUndoneHandler{
 		UseCase:          usecase,
 		PresenterFactory: presenterFactory,
 	}
 
 	response := httptest.NewRecorder()
 
-	request := httptest.NewRequest("PUT", "http://localhost:8888/api/v1/todos/1/mark-as-done", nil)
+	request := httptest.NewRequest("PUT", "http://localhost:8888/api/v1/todos/1/mark-as-undone", nil)
 	params := httprouter.Params{httprouter.Param{Key: "id", Value: strconv.Itoa(1)}}
 	request = request.WithContext(context.WithValue(request.Context(), httprouter.ParamsKey, params))
 

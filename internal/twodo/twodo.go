@@ -57,3 +57,8 @@ type DestroyUseCase interface {
 type MarkAsDoneUseCase interface {
 	Run(id int, presenter Presenter) error
 }
+
+// MarkAsUndoneUseCase is the interface to a use case that mark as undone
+type MarkAsUndoneUseCase interface {
+	Run(id int, presenter Presenter) error
+}
