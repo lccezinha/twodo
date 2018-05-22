@@ -1,7 +1,7 @@
 package application
 
 import (
-	"github.com/lccezinha/twodo/cmd/repository/todo"
+	"github.com/lccezinha/twodo/cmd/env"
 	"github.com/lccezinha/twodo/cmd/web/handlers"
 	"github.com/lccezinha/twodo/cmd/web/presenters"
 	"github.com/lccezinha/twodo/internal/twodo/todo/usecases"
@@ -18,12 +18,12 @@ type Handlers struct {
 
 // InitializeHandlers will return all handler initialized
 func InitializeHandlers() *Handlers {
-	repository := todo.NewMemoryRepository()
-	createUseCase := usecases.NewCreateTodoUseCase(repository)
-	listAllUseCase := usecases.NewListAllUseCase(repository)
-	destroyUseCase := usecases.NewDestroyUseCase(repository)
-	markAsDoneUseCase := usecases.NewMarkAsDoneUseCase(repository)
-	markAsUndoneUseCase := usecases.NewMarkAsUndoneUseCase(repository)
+	app := env.Init()
+	createUseCase := usecases.NewCreateTodoUseCase(app.Repository)
+	listAllUseCase := usecases.NewListAllUseCase(app.Repository)
+	destroyUseCase := usecases.NewDestroyUseCase(app.Repository)
+	markAsDoneUseCase := usecases.NewMarkAsDoneUseCase(app.Repository)
+	markAsUndoneUseCase := usecases.NewMarkAsUndoneUseCase(app.Repository)
 	presenterFactory := presenters.NewPresenterFactory()
 
 	return &Handlers{
