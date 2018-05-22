@@ -10,7 +10,7 @@ const (
 	insertStmt    = "INSERT INTO todos (description, done) VALUES ($1, $2) RETURNING id;"
 	selectAllStmt = "SELECT id, description, done FROM todos ORDER BY id DESC;"
 	destroyStmt   = "DELETE FROM todos WHERE id = $1;"
-	updateStmt    = "UPDATE todos SET done = $1 WHERE id = $2;"
+	updateStmt    = "UPDATE todos SET done = $1 WHERE id = $2 RETURNING id, description, done;"
 )
 
 // PostgresRepository holds repository that deal with postgres

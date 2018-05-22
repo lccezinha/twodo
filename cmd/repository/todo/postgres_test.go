@@ -106,7 +106,7 @@ func TestUpdate(t *testing.T) {
 		row := sqlmock.NewRows([]string{"id", "description", "done"}).
 			AddRow(1, "Description #1", true)
 
-		mock.ExpectQuery("UPDATE todos SET done = (.+) WHERE id = (.+);").
+		mock.ExpectQuery("UPDATE todos SET done = (.+) WHERE id = (.+) RETURNING id, description, done;").
 			WithArgs(true, 1).
 			WillReturnRows(row)
 
