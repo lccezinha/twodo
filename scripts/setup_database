@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "Setup database..."
+
 FILE="$(pwd)/scripts/structure.sql"
 DATABASE_NAME="twodo"
 USER="postgres"
@@ -20,3 +22,5 @@ build_database_structure() {
 
 ensure_database_exists
 build_database_structure
+
+echo "Setup Done!"
