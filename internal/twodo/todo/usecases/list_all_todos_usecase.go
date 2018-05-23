@@ -11,7 +11,7 @@ func (l *ListAllUseCase) Run(presenter twodo.Presenter) ([]twodo.Todo, error) {
 	todos, err := l.repository.ListAll()
 
 	if err != nil {
-		panic(err.Error())
+		panic(err)
 	}
 
 	presenter.PresentListTodos(todos)
