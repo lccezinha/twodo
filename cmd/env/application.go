@@ -2,6 +2,8 @@ package env
 
 import (
 	"database/sql"
+	"log"
+	"time"
 
 	"github.com/lccezinha/twodo/cmd/repository/todo"
 	"github.com/lccezinha/twodo/internal/twodo"
@@ -36,7 +38,20 @@ func loadEnvVars() vars {
 func loadDatabase(e vars) *sql.DB {
 	db, err := sql.Open("postgres", e["DATABASE_URL"])
 	if err != nil {
-		panic(err.Error())
+		log.Fatal(err)
+	}
+
+	for i := 0; i < 5; i++ {
+		time.Sleep(time.Duration(i) * time.Second)
+
+		if err = db.Ping(); err == nil {
+			break
+		}
+		log.Println(err)
+	}
+
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	return db
