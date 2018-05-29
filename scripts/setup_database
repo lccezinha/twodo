@@ -3,7 +3,7 @@
 echo "Setup database..."
 
 FILE="$(pwd)/scripts/structure.sql"
-DATABASE_NAME="twodo"
+DATABASE_NAME="twodo_app"
 USER="postgres"
 HOST="localhost"
 URL="postgres://$USER@$HOST/$DATABASE_NAME"

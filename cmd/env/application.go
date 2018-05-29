@@ -30,7 +30,7 @@ func Init() *Application {
 
 func loadEnvVars() vars {
 	v := vars{}
-	v["DATABASE_URL"] = "postgres://postgres@localhost/twodo"
+	v["DATABASE_URL"] = "postgres://postgres@localhost/twodo_app"
 
 	return v
 }
