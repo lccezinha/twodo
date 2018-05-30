@@ -1,0 +1,27 @@
+#!/bin/bash
+
+echo "Setup database..."
+
+FILE="$(pwd)/scripts/structure.sql"
+DATABASE_NAME="twodo_app_db"
+USER="postgres"
+HOST="127.0.0.1"
+PORT="5432"
+URL="postgres://$USER@$HOST:$PORT/$DATABASE_NAME"
+
+ensure_database_exists() {
+  if ! psql $URL -c '\l' > /dev/null 2>&1; then
+    echo "$DATABASE_NAME doesn't exist. Creating..."
+    psql -U $USER -c "CREATE DATABASE $DATABASE_NAME"
+  fi
+}
+
+build_database_structure() {
+  echo "Building database structure for $DATABASE_NAME"
+  psql $URL -f $FILE
+}
+
+ensure_database_exists
+build_database_structure
+
+echo "Setup Done!"
