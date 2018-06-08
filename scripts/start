@@ -1,0 +1,4 @@
+#!/bin/bash
+
+scripts/bootstrap
+go run cmd/web/main.go

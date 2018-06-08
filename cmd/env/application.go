@@ -3,6 +3,7 @@ package env
 import (
 	"database/sql"
 	"log"
+	"os"
 	"time"
 
 	"github.com/lccezinha/twodo/cmd/repository/todo"
@@ -30,7 +31,8 @@ func Init() *Application {
 
 func loadEnvVars() vars {
 	v := vars{}
-	v["DATABASE_URL"] = "postgres://postgres@172.19.0.2:5432/twodo_app_db?sslmode=disable"
+	// v["DATABASE_URL"] = "postgres://postgres@172.19.0.2:5432/twodo_app_db?sslmode=disable"
+	v["DATABASE_URL"] = os.Getenv("DATABASE_URL")
 
 	return v
 }

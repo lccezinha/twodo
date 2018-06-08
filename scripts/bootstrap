@@ -1,0 +1,5 @@
+#!/bin/bash
+
+FILE_DIR="$(dirname $0)"
+
+$FILE_DIR/setup_database $DATABASE_URL

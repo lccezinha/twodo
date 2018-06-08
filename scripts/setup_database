@@ -1,26 +1,61 @@
 #!/bin/bash
 
-echo "Setup database..."
+FILE_DIR="$(dirname $0)"
 
-FILE="$(pwd)/scripts/structure.sql"
-DATABASE_NAME="twodo_app"
-USER="postgres"
-HOST="localhost"
-URL="postgres://$USER@$HOST/$DATABASE_NAME"
+validate_database_url_presence() {
+  if [[ "$URL" == "" ]]; then
+    echo "Database URL must be informed"
+    exit 1
+  fi
+}
+
+parse_database_url() {
+  if [[ $URL =~ (.*)/(.*?)\? ]]
+  then
+    DATABASE_URL_WITHOUT_DB=${BASH_REMATCH[1]}
+    DATABASE_NAME=${BASH_REMATCH[2]}
+  else
+    echo
+    echo "Invalid DATABASE_URL format. It must have the following format:"
+    echo
+    echo "  postgres://user@host/database?sslmode=disable"
+    echo
+    exit 1
+  fi
+}
+
+wait_for_db_server() {
+  PG_CONNECTION_ATTEMPT=1
+  MAX_PG_ATTEMPTS=20
+
+  until psql $DATABASE_URL_WITHOUT_DB -c '\l' > /dev/null 2>&1; do
+    echo "Waiting for database start...(${PG_CONNECTION_ATTEMPT}/${MAX_PG_ATTEMPTS})"
+    sleep 1
+    if [[ $PG_CONNECTION_ATTEMPT -gt $MAX_PG_ATTEMPTS-1 ]]; then
+      echo "Failure: Could not connect to database after $PG_CONNECTION_ATTEMPT attempts"
+      exit 1;
+    fi
+    PG_CONNECTION_ATTEMPT=$((PG_CONNECTION_ATTEMPT+1))
+  done
+  echo "Database server is running"
+}
 
 ensure_database_exists() {
   if ! psql $URL -c '\l' > /dev/null 2>&1; then
     echo "$DATABASE_NAME doesn't exist. Creating..."
-    psql -U $USER -c "CREATE DATABASE $DATABASE_NAME"
+    psql $DATABASE_URL_WITHOUT_DB -c "CREATE DATABASE $DATABASE_NAME"
   fi
 }
 
 build_database_structure() {
   echo "Building database structure for $DATABASE_NAME"
-  psql $URL -f $FILE
+  psql $URL -f $FILE_DIR/database_structure.sql
 }
 
+URL=$1
+
+validate_database_url_presence
+parse_database_url
+wait_for_db_server
 ensure_database_exists
 build_database_structure
-
-echo "Setup Done!"
